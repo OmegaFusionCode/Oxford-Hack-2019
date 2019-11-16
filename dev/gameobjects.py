@@ -106,10 +106,10 @@ class Projectile(Entity):
         self.space = space
         self.space.add(self.body, self.shape)
 
-        self.coll_handler = self.space.add_wildcard_collision_handler(1)
-        self.coll_handler.begin = self.coll_begin
+#        self.coll_handler = self.space.add_wildcard_collision_handler(1)
+#        self.coll_handler.begin = self.coll_begin
 
-        self.removed = False
+#        self.removed = False
 
     def coll_begin(self, arbiter, space, data):
         if not self.removed:
