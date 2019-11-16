@@ -58,7 +58,12 @@ class Barrel(Entity):
         self.cooldown = 0
         self.update(0)
     def createProjectile(self):
-        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), self.parent.body.velocity, self.currAngle))
+        print("deltaX: " + self.delta_x)
+        print("deltaY: " + self.delta_y)
+        shotTime = 0.25
+        shotSpeed = math.sqrt((self.delta_x/shotTime)**2 + (self.delta_y + (500 * shotTime))**2)
+        shotAngle = math.acos(self.delta_x/(shotSpeed * shotTime))
+        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, shotAngle))
     
     def update(self, dt):
         currentPos = functions.convert(self.parent.body.position)
@@ -69,9 +74,9 @@ class Barrel(Entity):
         self.targetX = characterPos[0]
         self.targetY = characterPos[1]
 
-        delta_x = self.targetX - self.baseX
-        delta_y = self.targetY - self.baseY
-        self.currAngle = math.atan2(delta_y, delta_x)
+        self.delta_x = self.targetX - self.baseX
+        self.delta_y = self.targetY - self.baseY
+        self.currAngle = math.atan2(self.delta_y, self.delta_x)
 
         print(self.currAngle * (180/math.pi))
 
