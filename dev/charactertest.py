@@ -30,6 +30,12 @@ class GameWindow(object):
         self._setupGeneral()
         self._setupPygame(screenX, screenY, gameName)
         self._setupSpace()
+        self._setupCollisionHandlers()
+
+    def _setupGeneral(self):
+        self.entities = []
+        self.count = 0
+        self.dt = 0
 
     def _setupPygame(self, screenX, screenY, gameName):
         pygame.init()
@@ -54,10 +60,16 @@ class GameWindow(object):
 
         self.space.add(self.floor)
 
-    def _setupGeneral(self):
-        self.entities = []
-        self.count = 0
-        self.dt = 0
+    def _setupCollisionHandlers(self):
+
+        def projectile_post_solve(arbiter, space, data):
+            pass
+        #    for shape in arbiter.shapes:
+        #        if shape.collision_type == 1:
+
+        projectileHandler = self.space.add_wildcard_collision_handler(1)
+        projectileHandler.post_solve = projectile_post_solve
+
 
     @gameloop
     def gameLoop(self):
