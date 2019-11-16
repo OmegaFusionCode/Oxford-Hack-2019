@@ -45,13 +45,50 @@ class Character(Entity):
         self.space.add(self.body, self.shape)
         self.target = TargetLine(self.screen, self.space, self.entities, self, 75, -1 * math.pi, math.pi * 1/12)
         self.entities.append(self.target)
+        self.thrusting = False
+        self.imageIndex = 0
+
+        self.shldrImg = pygame.image.load("./playerShoulder.png").convert_alpha()
+        self.shldrImg = pygame.transform.scale(self.shldrImg, (256,256))
+
+        thrustImg1 = pygame.image.load("./body1.png").convert_alpha()
+        thrustImg1 = pygame.transform.scale(thrustImg1, (256,256))
+        thrustImg2 = pygame.image.load("./body2.png").convert_alpha()
+        thrustImg2 = pygame.transform.scale(thrustImg2, (256,256))
+        thrustImg3 = pygame.image.load("./body3.png").convert_alpha()
+        thrustImg3 = pygame.transform.scale(thrustImg3, (256,256))
+        self.sheetThrust = [thrustImg1, thrustImg2, thrustImg3, thrustImg2]
+
+        idleImg1 = pygame.image.load("./idle1.png").convert_alpha()
+        idleImg1 = pygame.transform.scale(idleImg1, (256,256))
+        idleImg2 = pygame.image.load("./idle2.png").convert_alpha()
+        idleImg2 = pygame.transform.scale(idleImg2, (256,256))
+        self.sheetIdle = [idleImg1,idleImg2]
+
+        self.armImg = pygame.image.load("./playerArm.png").convert_alpha()
+        self.armImg = pygame.transform.scale(self.armImg, (256,256))
 
 
     def update(self, dt):
         self.body.position = (self.x, self.body.position[1])
         if pygame.key.get_pressed()[pygame.K_SPACE]:
+            self.thrusting = True
             self.body.apply_force_at_local_point(Vec2d(0,2000), self.body.center_of_gravity)
+        else:
+            self.thrusting = False
 
+    def draw(self):
+        x,y = functions.convert(self.body.position)
+        if self.thrusting:
+            self.imageIndex += 0.5
+            self.screen.blit(self.sheetThrust[int(self.imageIndex%4)], (x-100, y-120))
+            functions.rotate(self.screen, self.armImg, (x-4,y-24), (96,96), math.degrees(self.target.currAngle))
+        else:
+            self.imageIndex += 0.25
+            self.screen.blit(self.sheetIdle[int(self.imageIndex%2)], (x-100, y-120))
+            functions.rotate(self.screen, self.armImg, (x-4,y-24), (96,96), math.degrees(self.target.currAngle))
+
+        self.screen.blit(self.shldrImg, (x-100, y-120))
 
 class TargetLine(Entity):
 

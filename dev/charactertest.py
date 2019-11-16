@@ -46,7 +46,7 @@ class GameWindow(object):
         self.screenY = screenY
         self.options = DrawOptions(self.screen)
         self.clock = pygame.time.Clock()
-    
+
     def _setupSpace(self):
         self.space = pymunk.Space()
         self.space.gravity = 0, -1000
@@ -92,7 +92,7 @@ class GameWindow(object):
             entity.update(self.dt)
 
     def _drawObjects(self):
-        self.screen.fill((0,0,0))
+        self.screen.fill((20,20,20))
         self.space.debug_draw(self.options)
         for entity in self.entities:
             entity.draw()
@@ -104,5 +104,5 @@ class GameWindow(object):
 
 
 if __name__ == "__main__":
-    myWindow = GameWindow(900, 450, "Test")
+    myWindow = GameWindow(1800, 900, "Test")
     myWindow.run()
