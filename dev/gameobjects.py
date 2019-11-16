@@ -36,7 +36,7 @@ class Character(Entity):
         self.x = pos[0]
         self.shape = pymunk.Poly.create_box(self.body, (2,50), 10)
         self.space.add(self.body, self.shape)
-        self.target = TargetLine(self.screen, self.space, self.entities, self, 75, math.pi * 1/24, math.pi * 11/24)
+        self.target = TargetLine(self.screen, self.space, self.entities, self, 75, -1 * math.pi, math.pi * 1/12)
         self.entities.append(self.target)
 
 
