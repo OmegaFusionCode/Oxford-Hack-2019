@@ -51,7 +51,8 @@ class GameWindow(object):
         self.space = pymunk.Space()
         self.space.gravity = 0, -1000
 
-        self.entities.append(Character(self.screen, self.space, self.entities, (100, 600)))
+        player = Character(self.screen, self.space, self.entities, (100, 600))
+        self.entities.append(player)
 
         self.floor = pymunk.Segment(self.space.static_body, (0, 5), (self.screenX, 5), 10)
         self.floor.body.position = 0, 5

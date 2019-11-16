@@ -20,14 +20,13 @@ class Enemy(Entity):
         self.space.add(self.body, self.shape)
         self.health = health
         self.player = player
+        self.alive = True
     def takeDamage(self, damage):
         self.health = self.health - damage
         if(self.health) <= 0:
             self.die()
     def die(self):
-        # remove all attached entities then remove itself
-        for entity in self.entities():
-            entity.remove()
+        self.alive = False
         self.remove()
     def handleEvent(self, event):
         if event.type == pygame.KEYDOWN:
@@ -36,7 +35,7 @@ class Enemy(Entity):
 class Enemy1(Enemy):
     def __init__(self, screen, space, entities, pos, player):
         mass = 10
-        size = (50,30)
+        size = (100,60)
         moment = pymunk.moment_for_box(mass, size)
         shape = pymunk.Poly.create_box(None, size, 0)
         health = 100
@@ -58,9 +57,9 @@ class Barrel(Entity):
         self.cooldown = 0
         self.update(0)
     def createProjectile(self):
-        pX = self.targetX
-        pY = self.targetY
-        shotSpeed = 2000
+        shotSpeed = 1500
+        """pX = self.delta_x
+        pY = (self.delta_y) * -1
         topHalfThetaOne = -pX + math.sqrt(pX**2 - 4*((-500 * pX**2)/shotSpeed**2)*((-(500 * pX**2)/shotSpeed**2)-pY)) 
         topHalfThetaTwo = -pX - math.sqrt(pX**2 - 4*((-500 * pX**2)/shotSpeed**2)*((-(500 * pX**2)/shotSpeed**2)-pY))
         botHalf = 2*((-500 * pX**2)/shotSpeed**2)
@@ -76,30 +75,33 @@ class Barrel(Entity):
         else:
             shotAngle = theta2
 
-        shotAngle = math.acos(self.delta_x/(shotSpeed * shotTime))
-        print("angle: " + str(shotAngle * (180/math.pi)))
-        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, shotAngle))
+        print("angle: " + str(shotAngle * (180/math.pi)))"""
+        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, self.currAngle, 10))
     
     def update(self, dt):
-        currentPos = functions.convert(self.parent.body.position)
-        characterPos = functions.convert(self.parent.player.body.position)
+        if(self.parent.alive):
+            currentPos = functions.convert(self.parent.body.position)
+            characterPos = functions.convert(self.parent.player.body.position)
 
-        self.baseX = currentPos[0]
-        self.baseY = currentPos[1]
-        self.targetX = characterPos[0]
-        self.targetY = characterPos[1]
+            self.baseX = currentPos[0]
+            self.baseY = currentPos[1]
+            self.targetX = characterPos[0]
+            self.targetY = characterPos[1]
 
-        self.delta_x = self.targetX - self.baseX
-        self.delta_y = self.targetY - self.baseY
-        self.currAngle = math.atan2(self.delta_y, self.delta_x)
+            self.delta_x = self.targetX - self.baseX
+            self.delta_y = self.targetY - self.baseY
+            self.currAngle = math.atan2(self.delta_y, self.delta_x) + (20*(math.pi/180))
 
-        self.endX = self.baseX + self.length * math.cos(self.currAngle)
-        self.endY = self.baseY + self.length * math.sin(self.currAngle)
+            self.endX = self.baseX + self.length * math.cos(self.currAngle)
+            self.endY = self.baseY + self.length * math.sin(self.currAngle)
 
-        if self.cooldown <= 0:
-            self.createProjectile()
-            self.cooldown = 1
-        self.cooldown -= dt
+            if self.cooldown <= 0:
+                self.createProjectile()
+                self.cooldown = 1.5
+            self.cooldown -= dt
+        else:
+            self.remove()
+
 
     def draw(self):
         pygame.draw.line(self.screen, (255,0,0), (self.baseX, self.baseY), (self.endX, self.endY))
