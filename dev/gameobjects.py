@@ -106,7 +106,7 @@ class TargetLine(Entity):
         self.update(0)
 
     def createProjectile(self):
-        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX,self.endY), 2000, self.parent.body.velocity, self.currAngle, 7))
+        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX,self.endY), 2000, self.parent.body.velocity, self.currAngle, 7, True))
 
     #def handleEvent(self, event):
     #    if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
@@ -134,14 +134,19 @@ class TargetLine(Entity):
 
 class Projectile(Entity):
 
-    def __init__(self, screen, space, entities, pos, speed, parentVelocity, angle, radius):
+    def __init__(self, screen, space, entities, pos, speed, parentVelocity, angle, radius, friendly = False):
+        mass = 100
         super().__init__(screen, space, entities)
-        self.body = pymunk.Body(1, pymunk.moment_for_circle(1, 0, 5))
+        self.body = pymunk.Body(mass, pymunk.moment_for_circle(mass, 0, radius))
         self.body.position = functions.convert(pos)
         self.body.velocity = (speed*math.cos(angle), parentVelocity[1]-speed*math.sin(angle))
 
         self.shape = pymunk.Circle(self.body, radius)
-        self.shape.collision_type = 1
+        
+        if friendly:
+            self.shape.collision_type = 1
+        else:
+            self.shape.collision_type = 2
 
         self.space = space
         self.space.add(self.body, self.shape)

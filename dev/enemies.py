@@ -34,7 +34,7 @@ class Enemy(Entity):
                 self.takeDamage(35)
 class Enemy1(Enemy):
     def __init__(self, screen, space, entities, pos, player):
-        mass = 10
+        mass = 1000
         size = (100,60)
         moment = pymunk.moment_for_box(mass, size)
         shape = pymunk.Poly.create_box(None, size, 0)
