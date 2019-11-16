@@ -43,7 +43,7 @@ class Character(Entity):
         self.x = pos[0]
         self.shape = pymunk.Poly.create_box(self.body, (2,50), 10)
         self.space.add(self.body, self.shape)
-        self.target = TargetLine(self.screen, self.space, self.entities, self, 75, -1 * math.pi, math.pi * 1/12)
+        self.target = TargetLine(self.screen, self.space, self.entities, self, 122, -11/24 * math.pi, math.pi * 7/24)
         self.entities.append(self.target)
         self.thrusting = False
         self.imageIndex = 0
@@ -82,11 +82,11 @@ class Character(Entity):
         if self.thrusting:
             self.imageIndex += 0.5
             self.screen.blit(self.sheetThrust[int(self.imageIndex%4)], (x-100, y-120))
-            functions.rotate(self.screen, self.armImg, (x-4,y-24), (96,96), math.degrees(self.target.currAngle))
+            functions.rotate(self.screen, self.armImg, (x-4,y-24), (96,96), -math.degrees(self.target.currAngle))
         else:
             self.imageIndex += 0.25
             self.screen.blit(self.sheetIdle[int(self.imageIndex%2)], (x-100, y-120))
-            functions.rotate(self.screen, self.armImg, (x-4,y-24), (96,96), math.degrees(self.target.currAngle))
+            functions.rotate(self.screen, self.armImg, (x-4,y-24), (96,96), -math.degrees(self.target.currAngle))
 
         self.screen.blit(self.shldrImg, (x-100, y-120))
 
@@ -104,7 +104,7 @@ class TargetLine(Entity):
         self.update(0)
 
     def createProjectile(self):
-        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), 1000, self.parent.body.velocity, self.currAngle))
+        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX,self.endY), 1000, self.parent.body.velocity, self.currAngle))
 
     #def handleEvent(self, event):
     #    if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
@@ -121,13 +121,14 @@ class TargetLine(Entity):
             self.createProjectile()
             self.cooldown = 1
         self.cooldown -= dt
-        self.centreX, self.centreY = functions.convert(self.parent.body.position)
-        self.endX = self.centreX + self.length * math.cos(self.currAngle)
-        self.endY = self.centreY + self.length * math.sin(self.currAngle)
+        self.centreX, self.centreY = functions.convert((self.parent.body.position[0]-4,self.parent.body.position[1]+24))
+        self.endX = self.centreX + self.length*math.cos(self.currAngle+0.40489)
+        self.endY = self.centreY + self.length*math.sin(self.currAngle+0.40489)
 
+    """
     def draw(self):
         pygame.draw.line(self.screen, (255,255,255), (self.centreX, self.centreY), (self.endX, self.endY))
-
+    """
 
 class Projectile(Entity):
 

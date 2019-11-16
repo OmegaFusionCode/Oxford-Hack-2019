@@ -104,5 +104,5 @@ class GameWindow(object):
 
 
 if __name__ == "__main__":
-    myWindow = GameWindow(1800, 900, "Test")
+    myWindow = GameWindow(1200, 600, "Test")
     myWindow.run()
