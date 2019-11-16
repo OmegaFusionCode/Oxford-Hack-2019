@@ -158,3 +158,15 @@ class Projectile(Entity):
     def update(self, dt):
         if self.body.position[0] < -5 or self.body.position[0] > self.screen.get_width() + 5 or self.body.position[1] < -5:
             self.remove()
+
+
+class Floor(Entity):
+
+    def __init__(self, screen, space, entities, startX, length):
+        super().__init__(screen, space, entities)
+        self.shape = pymunk.Segment(self.space.static_body, (startX, 5), (startX+length, 5), 10)
+        self.shape.elasticity = 0.2
+        self.shape.friction = 0.8
+        self.body = self.shape.body
+        self.body.position = (startX, 5)
+        self.space.add(self.shape)
