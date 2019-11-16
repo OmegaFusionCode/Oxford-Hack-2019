@@ -104,3 +104,7 @@ class Projectile(Entity):
 
         self.space = space
         self.space.add(self.body, self.shape)
+
+    def update(self, dt):
+        if self.body.position[0] < -5 or self.body.position[0] > self.screen.get_width() + 5 or self.body.position[1] < -5:
+            self.remove()
