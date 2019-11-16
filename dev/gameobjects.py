@@ -31,11 +31,10 @@ class Character(Entity):
     def __init__(self, screen, space, entities, pos):
         super().__init__(screen, space, entities)
         mass = 1
-        radius = 25
-        self.body = pymunk.Body(mass, pymunk.moment_for_circle(mass, 0, radius))
+        self.body = pymunk.Body(mass, pymunk.inf)
         self.body.position = pos
         self.x = pos[0]
-        self.shape = pymunk.Circle(self.body, radius)
+        self.shape = pymunk.Poly.create_box(self.body, (2,50), 10)
         self.space.add(self.body, self.shape)
         self.target = TargetLine(self.screen, self.space, self.entities, self, 75, math.pi * 1/24, math.pi * 11/24)
         self.entities.append(self.target)
@@ -67,10 +66,10 @@ class TargetLine(Entity):
             self.createProjectile()
 
     def update(self, dt):
-        if pygame.key.get_pressed()[pygame.K_w]:
+        if pygame.key.get_pressed()[pygame.K_s]:
             if self.currAngle < self.maxAngle:
                 self.currAngle += math.pi / 48
-        if pygame.key.get_pressed()[pygame.K_d]:
+        if pygame.key.get_pressed()[pygame.K_w]:
             if self.currAngle > self.minAngle:
                 self.currAngle -= math.pi / 48
         self.centreX, self.centreY = functions.convert(self.parent.body.position)
