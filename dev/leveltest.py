@@ -11,10 +11,10 @@ from gameobjects import TargetLine, Character, Projectile, Floor
 from materials import Material, metal, stone, glass
 from block import Block
 from levelmaker import LevelMaker
+                            
 
-
-FRAMERATE = 30
-INITIAL_X = 0
+FRAMERATE = 60
+INITIAL_X = 400
 
 
 def gameloop(func):
@@ -51,7 +51,7 @@ class GameWindow(object):
         self.space = pymunk.Space()
         self.space.gravity = 0, -1000
 
-        #self.entities.append(Character(self.screen, self.space, self.entities, (100, 600)))
+        self.entities.append(Character(self.screen, self.space, self.entities, (100, 600)))
         self.entities.append(Floor(self.screen, self.space, self.entities, 0, self.screen.get_width()))
 
         # Make the level parts
@@ -68,7 +68,7 @@ class GameWindow(object):
     @gameloop
     def gameLoop(self):
         self.dt = self.clock.tick(FRAMERATE) / 1000
-        self.space.step(1/60)
+        self.space.step(1/(2*FRAMERATE))
         self._handleEvents()
         self._executeLogic()
         self._drawObjects()
@@ -98,5 +98,5 @@ class GameWindow(object):
 
 
 if __name__ == "__main__":
-    myWindow = GameWindow(1500, 500, "Test")
+    myWindow = GameWindow(1800, 900, "Test")
     myWindow.run()
