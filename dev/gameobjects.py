@@ -56,14 +56,15 @@ class TargetLine(Entity):
         self.minAngle = minAngle
         self.currAngle = (minAngle + maxAngle) / 2
         self.time = 0
+        self.cooldown = 0
         self.update(0)
 
     def createProjectile(self):
         self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), self.parent.body.velocity, self.currAngle))
 
-    def handleEvent(self, event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
-            self.createProjectile()
+    #def handleEvent(self, event):
+    #    if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
+    #        self.createProjectile()
 
     def update(self, dt):
         if pygame.key.get_pressed()[pygame.K_s]:
@@ -72,6 +73,10 @@ class TargetLine(Entity):
         if pygame.key.get_pressed()[pygame.K_w]:
             if self.currAngle > self.minAngle:
                 self.currAngle -= math.pi / 48
+        if pygame.mouse.get_pressed()[0] and self.cooldown <= 0:
+            self.createProjectile()
+            self.cooldown = 1
+        self.cooldown -= dt
         self.centreX, self.centreY = functions.convert(self.parent.body.position)
         self.endX = self.centreX + self.length * math.cos(self.currAngle)
         self.endY = self.centreY + self.length * math.sin(self.currAngle)
