@@ -101,9 +101,21 @@ class Projectile(Entity):
         self.body.velocity = (1000*math.cos(angle), velocity[1]-1000*math.sin(angle))
 
         self.shape = pymunk.Circle(self.body, 5)
+        self.shape.collision_type = 1
 
         self.space = space
         self.space.add(self.body, self.shape)
+
+        self.coll_handler = self.space.add_wildcard_collision_handler(1)
+        self.coll_handler.begin = self.coll_begin
+
+        self.removed = False
+
+    def coll_begin(self, arbiter, space, data):
+        if not self.removed:
+            self.removed = True
+            self.remove()
+        return True
 
     def update(self, dt):
         if self.body.position[0] < -5 or self.body.position[0] > self.screen.get_width() + 5 or self.body.position[1] < -5:
