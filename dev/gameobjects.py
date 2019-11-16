@@ -1,4 +1,5 @@
 import math
+import os
 
 import pygame
 import pymunk
@@ -48,24 +49,25 @@ class Character(Entity):
         self.thrusting = False
         self.imageIndex = 0
 
-        self.shldrImg = pygame.image.load("./playerShoulder.png").convert_alpha()
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        self.shldrImg = pygame.image.load(os.path.join(dir_path, 'playerShoulder.png'))
         self.shldrImg = pygame.transform.scale(self.shldrImg, (256,256))
 
-        thrustImg1 = pygame.image.load("./body1.png").convert_alpha()
+        thrustImg1 = pygame.image.load(os.path.join(dir_path, 'body1.png'))
         thrustImg1 = pygame.transform.scale(thrustImg1, (256,256))
-        thrustImg2 = pygame.image.load("./body2.png").convert_alpha()
+        thrustImg2 = pygame.image.load(os.path.join(dir_path, 'body2.png'))
         thrustImg2 = pygame.transform.scale(thrustImg2, (256,256))
-        thrustImg3 = pygame.image.load("./body3.png").convert_alpha()
+        thrustImg3 = pygame.image.load(os.path.join(dir_path, 'body3.png'))
         thrustImg3 = pygame.transform.scale(thrustImg3, (256,256))
         self.sheetThrust = [thrustImg1, thrustImg2, thrustImg3, thrustImg2]
 
-        idleImg1 = pygame.image.load("./idle1.png").convert_alpha()
+        idleImg1 = pygame.image.load(os.path.join(dir_path, 'idle1.png'))
         idleImg1 = pygame.transform.scale(idleImg1, (256,256))
-        idleImg2 = pygame.image.load("./idle2.png").convert_alpha()
+        idleImg2 = pygame.image.load(os.path.join(dir_path, 'idle2.png'))
         idleImg2 = pygame.transform.scale(idleImg2, (256,256))
         self.sheetIdle = [idleImg1,idleImg2]
 
-        self.armImg = pygame.image.load("./playerArm.png").convert_alpha()
+        self.armImg = pygame.image.load(os.path.join(dir_path, 'playerArm.png'))
         self.armImg = pygame.transform.scale(self.armImg, (256,256))
 
 

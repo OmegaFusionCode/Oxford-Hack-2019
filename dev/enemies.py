@@ -58,11 +58,26 @@ class Barrel(Entity):
         self.cooldown = 0
         self.update(0)
     def createProjectile(self):
-        print("deltaX: " + self.delta_x)
-        print("deltaY: " + self.delta_y)
-        shotTime = 0.25
-        shotSpeed = math.sqrt((self.delta_x/shotTime)**2 + (self.delta_y + (500 * shotTime))**2)
+        pX = self.targetX
+        pY = self.targetY
+        shotSpeed = 2000
+        topHalfThetaOne = -pX + math.sqrt(pX**2 - 4*((-500 * pX**2)/shotSpeed**2)*((-(500 * pX**2)/shotSpeed**2)-pY)) 
+        topHalfThetaTwo = -pX - math.sqrt(pX**2 - 4*((-500 * pX**2)/shotSpeed**2)*((-(500 * pX**2)/shotSpeed**2)-pY))
+        botHalf = 2*((-500 * pX**2)/shotSpeed**2)
+
+        theta1 = topHalfThetaOne / botHalf
+        theta2 = topHalfThetaTwo / botHalf
+
+        shotAngle = 0
+
+        # get values of t for both thetas and see which one is lower
+        if (pX/(shotSpeed * math.cos(theta1))) < (pX/(shotSpeed * math.cos(theta2))):
+            shotAngle = theta1
+        else:
+            shotAngle = theta2
+
         shotAngle = math.acos(self.delta_x/(shotSpeed * shotTime))
+        print("angle: " + str(shotAngle * (180/math.pi)))
         self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, shotAngle))
     
     def update(self, dt):
@@ -77,8 +92,6 @@ class Barrel(Entity):
         self.delta_x = self.targetX - self.baseX
         self.delta_y = self.targetY - self.baseY
         self.currAngle = math.atan2(self.delta_y, self.delta_x)
-
-        print(self.currAngle * (180/math.pi))
 
         self.endX = self.baseX + self.length * math.cos(self.currAngle)
         self.endY = self.baseY + self.length * math.sin(self.currAngle)
