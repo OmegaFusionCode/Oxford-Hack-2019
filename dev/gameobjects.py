@@ -106,7 +106,7 @@ class TargetLine(Entity):
         self.update(0)
 
     def createProjectile(self):
-        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX,self.endY), 2000, self.parent.body.velocity, self.currAngle, 15, True))
+        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX,self.endY), 2000, self.parent.body.velocity, self.currAngle, 10, True))
 
     #def handleEvent(self, event):
     #    if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
@@ -135,7 +135,7 @@ class TargetLine(Entity):
 class Projectile(Entity):
 
     def __init__(self, screen, space, entities, pos, speed, parentVelocity, angle, radius, friendly = False):
-        mass = 1000
+        mass = 200
         super().__init__(screen, space, entities)
         self.body = pymunk.Body(mass, pymunk.moment_for_circle(mass, 0, radius))
         self.body.position = functions.convert(pos)
