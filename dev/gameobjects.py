@@ -24,6 +24,13 @@ class Entity(object):
     def handleEvent(self, event):
         pass
 
+    def remove(self):
+        self.entities.remove(self)
+        try:
+            self.space.remove(self.body)
+            self.space.remove(self.shape)
+        except:
+            pass
 
 
 class Character(Entity):
