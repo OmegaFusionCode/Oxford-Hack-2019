@@ -11,6 +11,7 @@ from gameobjects import TargetLine, Character, Projectile
 from materials import Material
 from block import Block
 
+from enemies import Enemy1
 
 FRAMERATE = 30
 
@@ -45,7 +46,10 @@ class GameWindow(object):
         self.space = pymunk.Space()
         self.space.gravity = 0, -1000
 
-        self.entities.append(Character(self.screen, self.space, self.entities, (100, 600)))
+        player = Character(self.screen, self.space, self.entities, (100, 600))
+        self.entities.append(player)
+        enemy = Enemy1(self.screen, self.space, self.entities, (500, 50), player)
+        self.entities.append(enemy)
 
         self.floor = pymunk.Segment(self.space.static_body, (0, 5), (self.screenX, 5), 10)
         self.floor.body.position = 0, 5
