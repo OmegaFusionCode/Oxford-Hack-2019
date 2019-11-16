@@ -6,6 +6,7 @@ class Material(object):
         """
         self.density = density
         self.texture = texture
+        self.strength = strength
         self.breakType = breakType
 
     def getMass(self, volume):
