@@ -1,20 +1,23 @@
 import pygame,functions,os
 from gameobjects import Entity
+import functions
 
 class Explosion(Entity):
-    def __init__(self, screen, pos):
+    def __init__(self, screen, space, entities, pos):
         super().__init__(screen, space, entities)
-        self.pos = pos
+        self.pos = functions.convert((pos[0]-96, pos[1]+96))
         self.index = 0
         self.screen = screen
 
     def update(self,dt):
         self.index+=0.25
-        if self.index==9:
-            self.remove()
+        self.pos = (self.pos[0]-2, self.pos[1])
 
     def draw(self):
-        self.screen.blit(expSheet[int(self.index)], (200,200))
+        try:
+            self.screen.blit(expSheet[int(self.index)], self.pos)
+        except IndexError:
+            self.remove()
 
     def sidescroll(self):
         pass

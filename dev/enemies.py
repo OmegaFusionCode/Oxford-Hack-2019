@@ -37,7 +37,9 @@ class Enemy(Entity):
             return 500
         return 0
     def die(self):
-        self.entities.append(explosion.Explosion(self.screen, self.body.position))
+        print("Test")
+        self.entities.append(explosion.Explosion(self.screen, self.space, self.entities, self.body.position))
+        print("Test 2")
         self.alive = False
         self.remove()
     def handleEvent(self, event):
