@@ -7,13 +7,14 @@ import pygame
 import pymunk
 from pymunk.pygame_util import DrawOptions
 
-from gameobjects import TargetLine, Character, Projectile
-from materials import Material
+from gameobjects import TargetLine, Character, Projectile, Floor
+from materials import Material, metal, stone, glass
 from block import Block
+from levelmaker import LevelMaker
+                            
 
-
-FRAMERATE = 30
-
+FRAMERATE = 60
+INITIAL_X = 400
 
 
 def gameloop(func):
@@ -30,7 +31,6 @@ class GameWindow(object):
         self._setupGeneral()
         self._setupPygame(screenX, screenY, gameName)
         self._setupSpace()
-        self._setupCollisionHandlers()
 
     def _setupGeneral(self):
         self.entities = []
@@ -46,36 +46,31 @@ class GameWindow(object):
         self.screenY = screenY
         self.options = DrawOptions(self.screen)
         self.clock = pygame.time.Clock()
-
+    
     def _setupSpace(self):
         self.space = pymunk.Space()
         self.space.gravity = 0, -1000
 
-        player = Character(self.screen, self.space, self.entities, (100, 600))
-        self.entities.append(player)
+        self.entities.append(Character(self.screen, self.space, self.entities, (100, 600)))
+        self.entities.append(Floor(self.screen, self.space, self.entities, 0, 2*self.screen.get_width()))
 
-        self.floor = pymunk.Segment(self.space.static_body, (0, 5), (self.screenX, 5), 10)
-        self.floor.body.position = 0, 5
-        self.floor.elasticity = 0.2
-        self.floor.friction = 0.2
+        # Make the level parts
 
-        self.space.add(self.floor)
+        LevelMaker(self.screen, self.space, self.entities).makeLevels(INITIAL_X)
+        #box = Block(self.screen, self.space, self.entities, (300, 120), 200, 20, metal)
+        #floor = Floor(self.screen, self.space, self.entities, 200, 200)
 
-    def _setupCollisionHandlers(self):
+        #self.floor = pymunk.Segment(self.space.static_body, (0, 5), (self.screenX, 5), 10)
+        #self.floor.body.position = 0, 5
+        #self.floor.elasticity = 0.2
+        #self.floor.friction = 0.2
 
-        def projectile_post_solve(arbiter, space, data):
-            pass
-        #    for shape in arbiter.shapes:
-        #        if shape.collision_type == 1:
-
-        projectileHandler = self.space.add_wildcard_collision_handler(1)
-        projectileHandler.post_solve = projectile_post_solve
-
+        #self.space.add(self.floor)
 
     @gameloop
     def gameLoop(self):
         self.dt = self.clock.tick(FRAMERATE) / 1000
-        self.space.step(1/60)
+        self.space.step(1/(2*FRAMERATE))
         self._handleEvents()
         self._executeLogic()
         self._drawObjects()
@@ -93,7 +88,7 @@ class GameWindow(object):
             entity.update(self.dt)
 
     def _drawObjects(self):
-        self.screen.fill((20,20,20))
+        self.screen.fill((0,0,0))
         self.space.debug_draw(self.options)
         for entity in self.entities:
             entity.draw()
@@ -105,5 +100,5 @@ class GameWindow(object):
 
 
 if __name__ == "__main__":
-    myWindow = GameWindow(1200, 600, "Test")
+    myWindow = GameWindow(1800, 900, "Test")
     myWindow.run()

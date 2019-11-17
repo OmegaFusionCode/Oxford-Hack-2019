@@ -1,4 +1,5 @@
 import math
+import os
 
 import pygame
 import pymunk
@@ -39,6 +40,7 @@ class Character(Entity):
         super().__init__(screen, space, entities)
         mass = 1
         self.body = pymunk.Body(mass, pymunk.inf)
+        self.body.entity_ref = self
         self.body.position = pos
         self.x = pos[0]
         self.shape = pymunk.Poly.create_box(self.body, (2,50), 10)
@@ -48,24 +50,25 @@ class Character(Entity):
         self.thrusting = False
         self.imageIndex = 0
 
-        self.shldrImg = pygame.image.load("./playerShoulder.png").convert_alpha()
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        self.shldrImg = pygame.image.load(os.path.join(dir_path, 'playerShoulder.png'))
         self.shldrImg = pygame.transform.scale(self.shldrImg, (256,256))
 
-        thrustImg1 = pygame.image.load("./body1.png").convert_alpha()
+        thrustImg1 = pygame.image.load(os.path.join(dir_path, 'body1.png'))
         thrustImg1 = pygame.transform.scale(thrustImg1, (256,256))
-        thrustImg2 = pygame.image.load("./body2.png").convert_alpha()
+        thrustImg2 = pygame.image.load(os.path.join(dir_path, 'body2.png'))
         thrustImg2 = pygame.transform.scale(thrustImg2, (256,256))
-        thrustImg3 = pygame.image.load("./body3.png").convert_alpha()
+        thrustImg3 = pygame.image.load(os.path.join(dir_path, 'body3.png'))
         thrustImg3 = pygame.transform.scale(thrustImg3, (256,256))
         self.sheetThrust = [thrustImg1, thrustImg2, thrustImg3, thrustImg2]
 
-        idleImg1 = pygame.image.load("./idle1.png").convert_alpha()
+        idleImg1 = pygame.image.load(os.path.join(dir_path, 'idle1.png'))
         idleImg1 = pygame.transform.scale(idleImg1, (256,256))
-        idleImg2 = pygame.image.load("./idle2.png").convert_alpha()
+        idleImg2 = pygame.image.load(os.path.join(dir_path, 'idle2.png'))
         idleImg2 = pygame.transform.scale(idleImg2, (256,256))
         self.sheetIdle = [idleImg1,idleImg2]
 
-        self.armImg = pygame.image.load("./playerArm.png").convert_alpha()
+        self.armImg = pygame.image.load(os.path.join(dir_path, 'playerArm.png'))
         self.armImg = pygame.transform.scale(self.armImg, (256,256))
 
 
@@ -104,7 +107,7 @@ class TargetLine(Entity):
         self.update(0)
 
     def createProjectile(self):
-        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX,self.endY), 1000, self.parent.body.velocity, self.currAngle))
+        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX,self.endY), 2000, self.parent.body.velocity, self.currAngle, 10, True))
 
     #def handleEvent(self, event):
     #    if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
@@ -132,14 +135,20 @@ class TargetLine(Entity):
 
 class Projectile(Entity):
 
-    def __init__(self, screen, space, entities, pos, speed, parentVelocity, angle):
+    def __init__(self, screen, space, entities, pos, speed, parentVelocity, angle, radius, friendly = False):
+        mass = 200
         super().__init__(screen, space, entities)
-        self.body = pymunk.Body(1, pymunk.moment_for_circle(1, 0, 5))
+        self.body = pymunk.Body(mass, pymunk.moment_for_circle(mass, 0, radius))
+        self.body.entity_ref = self
         self.body.position = functions.convert(pos)
         self.body.velocity = (speed*math.cos(angle), parentVelocity[1]-speed*math.sin(angle))
 
-        self.shape = pymunk.Circle(self.body, 5)
-        self.shape.collision_type = 1
+        self.shape = pymunk.Circle(self.body, radius)
+        
+        if friendly:
+            self.shape.collision_type = 1
+        else:
+            self.shape.collision_type = 2
 
         self.space = space
         self.space.add(self.body, self.shape)
@@ -158,3 +167,16 @@ class Projectile(Entity):
     def update(self, dt):
         if self.body.position[0] < -5 or self.body.position[0] > self.screen.get_width() + 5 or self.body.position[1] < -5:
             self.remove()
+
+
+class Floor(Entity):
+
+    def __init__(self, screen, space, entities, startX, length):
+        super().__init__(screen, space, entities)
+        self.shape = pymunk.Segment(self.space.static_body, (startX, 5), (startX+length, 5), 10)
+        self.shape.elasticity = 0.2
+        self.shape.friction = 0.8
+        self.body = self.shape.body
+        self.body.entity_ref = self
+        self.body.position = (startX, 5)
+        self.space.add(self.shape)

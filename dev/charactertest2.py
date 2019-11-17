@@ -48,7 +48,7 @@ class GameWindow(object):
 
         player = Character(self.screen, self.space, self.entities, (100, 600))
         self.entities.append(player)
-        enemy = Enemy1(self.screen, self.space, self.entities, (500, 50), player)
+        enemy = Enemy1(self.screen, self.space, self.entities, (1000, 50), player)
         self.entities.append(enemy)
 
         self.floor = pymunk.Segment(self.space.static_body, (0, 5), (self.screenX, 5), 10)
@@ -96,5 +96,5 @@ class GameWindow(object):
 
 
 if __name__ == "__main__":
-    myWindow = GameWindow(900, 450, "Test")
+    myWindow = GameWindow(1800, 950, "Test")
     myWindow.run()
