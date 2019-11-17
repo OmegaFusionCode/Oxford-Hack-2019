@@ -1,5 +1,6 @@
 import random
 
+from gameobjects import Floor
 from materials import metal, stone, glass
 from block import Block
 
@@ -15,12 +16,12 @@ class LevelMaker(object):
 
     def makeLevels(self, initialX):
         currentX = initialX
-        print(currentX)
         for func in self.levels:
             currentX += func(currentX)
-            print(currentX)
     
     def level1(self, initialX):
+        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+
         blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal)
         blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+490, 120), 200, 20, metal)
 
@@ -31,6 +32,7 @@ class LevelMaker(object):
 
         blockTop1 = Block(self.screen, self.space, self.entities, (initialX+400, 450), 20, 200, metal)
 
+        self.entities.append(floor)
 
         self.entities.append(blockBottom1)
         self.entities.append(blockBottom2)
@@ -45,6 +47,8 @@ class LevelMaker(object):
         return 800
 
     def level2(self, initialX):
+        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+
         blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
         blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 120), 200, 20, metal)
         blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal)
@@ -64,6 +68,7 @@ class LevelMaker(object):
         blockTop1 = Block(self.screen, self.space, self.entities, (initialX+200, 450), 20, 200, metal)
         blockTop2 = Block(self.screen, self.space, self.entities, (initialX+600, 450), 20, 200, metal)
 
+        self.entities.append(floor)
 
         self.entities.append(blockBottom1)
         self.entities.append(blockBottom2)
@@ -87,6 +92,8 @@ class LevelMaker(object):
         return 800
 
     def level3(self, initialX):
+        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+
         blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
         blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 120), 200, 20, metal)
         blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal)
@@ -103,6 +110,7 @@ class LevelMaker(object):
 
         blockTop1 = Block(self.screen, self.space, self.entities, (initialX+400, 450), 20, 200, metal)
 
+        self.entities.append(floor)
 
         self.entities.append(blockBottom1)
         self.entities.append(blockBottom2)

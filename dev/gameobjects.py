@@ -40,6 +40,7 @@ class Character(Entity):
         super().__init__(screen, space, entities)
         mass = 1
         self.body = pymunk.Body(mass, pymunk.inf)
+        self.body.entity_ref = self
         self.body.position = pos
         self.x = pos[0]
         self.shape = pymunk.Poly.create_box(self.body, (2,50), 10)
@@ -138,6 +139,7 @@ class Projectile(Entity):
         mass = 200
         super().__init__(screen, space, entities)
         self.body = pymunk.Body(mass, pymunk.moment_for_circle(mass, 0, radius))
+        self.body.entity_ref = self
         self.body.position = functions.convert(pos)
         self.body.velocity = (speed*math.cos(angle), parentVelocity[1]-speed*math.sin(angle))
 
@@ -175,5 +177,6 @@ class Floor(Entity):
         self.shape.elasticity = 0.2
         self.shape.friction = 0.8
         self.body = self.shape.body
+        self.body.entity_ref = self
         self.body.position = (startX, 5)
         self.space.add(self.shape)
