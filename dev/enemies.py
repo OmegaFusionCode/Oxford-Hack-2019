@@ -67,8 +67,52 @@ class Enemy1(Enemy):
 
 
             if self.barrel.cooldown <= 0:
-                self.barrel.createProjectile()
+                self.barrel.createProjectile(0)
                 self.barrel.cooldown = 1.5
+            self.barrel.cooldown -= dt
+        else:
+            self.remove()
+
+    def draw(self):
+        functions.rotate(self.screen, self.bodyImg, functions.convert(self.body.position),(132/2,192/2), math.degrees(self.body.angle))
+        self.barrel.draw()
+
+class Enemy2(Enemy):
+    def __init__(self, screen, space, entities, pos, player):
+        mass = 1000
+        size = (160/2,132/2)
+        moment = pymunk.moment_for_box(mass, size)
+        shape = pymunk.Poly.create_box(None, size, 0)
+        health = 100
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        self.bodyImg = pygame.image.load(os.path.join(dir_path, "turretBody.png")).convert_alpha()
+        self.bodyImg = pygame.transform.scale(self.bodyImg, (128,128))
+
+        self.gunImg = pygame.image.load(os.path.join(dir_path, "turret1Gun.png")).convert_alpha()
+        self.gunImg = pygame.transform.scale(self.gunImg, (128,128))
+
+        super().__init__(screen, space, entities, pos, moment, shape, mass, health, player)
+
+        # Add the turret barrel as an attached entity
+        self.barrel = Barrel(self.screen, self.space, self.entities, self, 0, math.pi)
+
+    def update(self, dt):
+        if self.alive:
+            self.barrel.baseX, self.barrel.baseY = functions.convert((self.body.position[0], self.body.position[1]))
+
+            self.barrel.endX = self.barrel.baseX - (92/2) * math.cos(self.barrel.currAngle)
+            self.barrel.endY = self.barrel.baseY + (92/2) * math.sin(self.barrel.currAngle)
+
+            characterPos = functions.convert(self.player.body.position)
+
+            self.barrel.delta_x = characterPos[0] - self.barrel.baseX
+            self.barrel.delta_y = characterPos[1] - self.barrel.baseY
+            self.barrel.currAngle = math.pi-(math.atan2(self.barrel.delta_y, self.barrel.delta_x) + (10*(math.pi/180)))
+
+
+            if self.barrel.cooldown <= 0:
+                self.barrel.createProjectile(1)
+                self.barrel.cooldown = 2.5
             self.barrel.cooldown -= dt
         else:
             self.remove()
@@ -85,29 +129,17 @@ class Barrel(Entity):
         self.minAngle = minAngle
         self.currAngle = (minAngle + maxAngle) / 2
         self.time = 0
-        self.cooldown = 0
+        self.cooldown = 1.5
         self.update(0)
-    def createProjectile(self):
-        shotSpeed = 1500
-        """pX = self.delta_x
-        pY = (self.delta_y) * -1
-        topHalfThetaOne = -pX + math.sqrt(pX**2 - 4*((-500 * pX**2)/shotSpeed**2)*((-(500 * pX**2)/shotSpeed**2)-pY))
-        topHalfThetaTwo = -pX - math.sqrt(pX**2 - 4*((-500 * pX**2)/shotSpeed**2)*((-(500 * pX**2)/shotSpeed**2)-pY))
-        botHalf = 2*((-500 * pX**2)/shotSpeed**2)
-
-        theta1 = topHalfThetaOne / botHalf
-        theta2 = topHalfThetaTwo / botHalf
-
-        shotAngle = 0
-
-        # get values of t for both thetas and see which one is lower
-        if (pX/(shotSpeed * math.cos(theta1))) < (pX/(shotSpeed * math.cos(theta2))):
-            shotAngle = theta1
-        else:
-            shotAngle = theta2
-
-        print("angle: " + str(shotAngle * (180/math.pi)))"""
-        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, math.pi-self.currAngle, 10))
+    def createProjectile(self,projectileType):
+        if projectileType == 0:
+            shotSpeed = 1500
+            self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, math.pi-self.currAngle, 10))
+        elif projectileType == 1:
+            shotSpeed = 2000
+            self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, (math.pi-self.currAngle) + (5 * (math.pi/180)), 7))
+            self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, math.pi-self.currAngle, 7))
+            self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, (math.pi-self.currAngle) - (5 * (math.pi/180)), 7))
 
     def update(self, dt):
         """
