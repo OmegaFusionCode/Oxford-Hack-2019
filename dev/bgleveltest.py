@@ -51,6 +51,10 @@ class GameWindow(object):
         self.options = DrawOptions(self.screen)
         self.clock = pygame.time.Clock()
 
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        pygame.mixer.init()
+        pygame.mixer.music.load(os.path.join(dir_path, ""))
+        
     def _setupSpace(self):
         self.space = pymunk.Space()
         self.space.gravity = 0, -1000
