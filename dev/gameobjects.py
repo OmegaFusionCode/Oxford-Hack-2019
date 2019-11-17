@@ -34,7 +34,7 @@ class Entity(object):
             pass
     
     def sidescroll(self):
-        self.body.position = (self.body.position[0]-1, self.body.position)
+        self.body.position = (self.body.position[0]-2, self.body.position[1])
 
 
 class Character(Entity):
@@ -158,7 +158,7 @@ class TargetLine(Entity):
 
         if pygame.mouse.get_pressed()[0] and self.cooldown <= 0:
             self.createProjectile()
-            self.cooldown = 0.25
+            self.cooldown = 0.333
         self.cooldown -= dt
         self.endX = self.centreX + self.length*math.cos(self.currAngle+0.40489)
         self.endY = self.centreY + self.length*math.sin(self.currAngle+0.40489)
@@ -219,5 +219,5 @@ class Floor(Entity):
         self.body.position = (startX, 5)
         self.space.add(self.shape)
 
-    def sidescroll():
+    def sidescroll(self):
         pass

@@ -11,6 +11,7 @@ from gameobjects import TargetLine, Character, Projectile, Floor
 from materials import Material, metal, stone, glass
 from block import Block
 from levelmaker import LevelMaker
+from parallax import BackgroundLayer
 
 
 FRAMERATE = 60
@@ -32,6 +33,7 @@ class GameWindow(object):
         self._setupPygame(screenX, screenY, gameName)
         self._setupSpace()
         self._setupCollisionHandlers()
+        self._backgroundSetup()
 
     def _setupGeneral(self):
         self.entities = []
@@ -90,6 +92,13 @@ class GameWindow(object):
         self.projectileCollisionHandler = self.space.add_wildcard_collision_handler(1)
         self.projectileCollisionHandler.post_solve = projectile_post_solve
 
+    def _backgroundSetup(self):
+        self.bgs = [BackgroundLayer(self.screen, "bg.png", 0),
+                    BackgroundLayer(self.screen, "bg_mountains.png", 0.25),
+                    BackgroundLayer(self.screen, "bg_clouds.png", 0.5),
+                    BackgroundLayer(self.screen, "bg_hills.png", 0.75),
+                    BackgroundLayer(self.screen, "bg_foreground.png", 1.5)]
+
 
     @gameloop
     def gameLoop(self):
@@ -112,13 +121,19 @@ class GameWindow(object):
             entity.update(self.dt)
         for entity in self.entities:
             entity.sidescroll()
+        for bg in self.bgs:
+            bg.update()
 
     def _drawObjects(self):
         pygame.display.set_caption("FPS: " + str(self.clock.get_fps()))
         self.screen.fill((0,0,0))
+        for bg in self.bgs:
+            bg.draw()
         self.space.debug_draw(self.options)
         for entity in self.entities:
             entity.draw()
+        for bg in self.bgs:
+            bg.draw()
         pygame.display.flip()
 
     def run(self):
