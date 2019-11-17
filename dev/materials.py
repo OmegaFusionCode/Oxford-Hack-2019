@@ -2,7 +2,7 @@ import os, pygame
 
 class Material(object):
 
-    def __init__(self, texture, density, friction, strength, breakType=0):
+    def __init__(self, texture, density, friction, strength, breakType=0, name):
         """breakType specifies whether the material does nothing,
         shatters, or breaks into pieces when hit.
         """
