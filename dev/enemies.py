@@ -80,6 +80,10 @@ class Enemy1(Enemy):
             if self.barrel.cooldown <= 0:
                 self.barrel.createProjectile(0)
                 self.barrel.cooldown = 2.5
+                dir_path = os.path.dirname(os.path.realpath(__file__))
+                gunSound = pygame.mixer.Sound(os.path.join(dir_path, "sounds/sound_effects/Gun8.wav"))
+                gunSound.set_volume(0.15)
+                gunSound.play()
             self.barrel.cooldown -= dt
         else:
             self.remove()
@@ -124,6 +128,10 @@ class Enemy2(Enemy):
             if self.barrel.cooldown <= 0:
                 self.barrel.createProjectile(1)
                 self.barrel.cooldown = 3.5
+                dir_path = os.path.dirname(os.path.realpath(__file__))
+                gunSound = pygame.mixer.Sound(os.path.join(dir_path, "sounds/sound_effects/Gun8.wav"))
+                gunSound.set_volume(0.15)
+                gunSound.play()
             self.barrel.cooldown -= dt
         else:
             self.remove()

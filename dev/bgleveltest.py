@@ -41,6 +41,8 @@ class GameWindow(object):
         self.dt = 0
 
     def _setupPygame(self, screenX, screenY, gameName):
+        pygame.mixer.pre_init(22050, -16, 2, 512)
+        pygame.mixer.init()
         pygame.init()
         pygame.display.set_mode((screenX, screenY))
         pygame.display.set_caption(gameName)
@@ -53,9 +55,10 @@ class GameWindow(object):
         songs = ["sounds\music\drive_with_me_looped.wav","sounds\music\motivation_looped.wav"]
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        pygame.mixer.init()
         pygame.mixer.music.load(os.path.join(dir_path, random.choice(songs)))
         pygame.mixer.music.play(-1,0.0)
+        pygame.mixer.music.set_volume(0.35)
+
         
     def _setupSpace(self):
         self.space = pymunk.Space()

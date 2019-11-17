@@ -59,6 +59,9 @@ class Character(Entity):
         self.imageIndex = 0
         self.maxVel = 1500
         self.minVel = -1000
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        self.gunSound = pygame.mixer.Sound(os.path.join(dir_path, "sounds/sound_effects/Gun9.wav"))
+        self.gunSound.set_volume(0.15)
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
         self.shldrImg = pygame.image.load(os.path.join(dir_path, 'playerShoulder.png'))
@@ -132,6 +135,10 @@ class TargetLine(Entity):
         self.update(0)
 
     def createProjectile(self):
+        if pygame.mixer.get_init() == None:
+            pygame.mixer.pre_init(44100, -16, 1, 512)
+            pygame.mixer.init()
+        pygame.mixer.Sound.play(self.parent.gunSound)
         self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX,self.endY), 4000, self.parent.body.velocity, self.currAngle, 10, 125, True))
 
     #def handleEvent(self, event):
