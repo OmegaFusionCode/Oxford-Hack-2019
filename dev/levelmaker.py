@@ -34,8 +34,7 @@ class LevelMaker(object):
         blockTop1 = Block(self.screen, self.space, self.entities, (initialX+400, 450), 20, 200, metal)
 
         enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 60), player)
-        enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 280), player)
-        enemy3 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 500), player)
+        enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 500), player)
 
         self.entities.append(floor)
 
@@ -51,7 +50,6 @@ class LevelMaker(object):
 
         self.entities.append(enemy1)
         self.entities.append(enemy2)
-        self.entities.append(enemy3)
 
         return 800
 
@@ -389,9 +387,9 @@ class LevelMaker(object):
 
         blockTop1 = Block(self.screen, self.space, self.entities, (initialX+380, 450), 20, 560, metal)
 
-        enemy1 = Enemy2(self.screen, self.space, self.entities, (initialX+200, 280), player)
+        enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+200, 280), player)
         enemy2 = Enemy2(self.screen, self.space, self.entities, (initialX+380, 280), player)
-        enemy3 = Enemy2(self.screen, self.space, self.entities, (initialX+560, 280), player)
+        enemy3 = Enemy1(self.screen, self.space, self.entities, (initialX+560, 280), player)
 
         self.entities.append(floor)
 
