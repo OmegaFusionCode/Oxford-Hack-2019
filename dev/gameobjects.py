@@ -49,6 +49,7 @@ class Character(Entity):
         self.x = pos[0]
         self.shape = pymunk.Poly.create_box(self.body, (30,self.height), 5)
         self.space.add(self.body, self.shape)
+        self.shape.collision_type = 5
         self.target = TargetLine(self.screen, self.space, self.entities, self, 122, -11/24 * math.pi, math.pi * 7/24)
         self.entities.append(self.target)
         self.thrusting = False

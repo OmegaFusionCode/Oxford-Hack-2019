@@ -87,6 +87,9 @@ class GameWindow(object):
         def projectileIgnoreEnemyProjectile(arbiter, space, data):
             return False
 
+        def enemyProjectileIgnoreEnemy(arbiter, space, data):
+            return False
+
         self.enemyProjectileIgnoreBlocks_handler = self.space.add_collision_handler(2,3)
         self.enemyProjectileIgnoreBlocks_handler.begin = enemyProjectileIgnoreBlocks
 
@@ -95,7 +98,9 @@ class GameWindow(object):
 
         self.projectileIgnoreEnemyProjectile_handler = self.space.add_collision_handler(1,2)
         self.projectileIgnoreEnemyProjectile_handler.begin = projectileIgnoreEnemyProjectile
-
+        
+        self.enemyProjectileIgnoreEnemy_hander = self.space.add_collision_handler(2,4)
+        self.enemyProjectileIgnoreEnemy_hander.begin = enemyProjectileIgnoreEnemy
 
     @gameloop
     def gameLoop(self):

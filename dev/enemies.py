@@ -17,6 +17,7 @@ class Enemy(Entity):
         self.body.position = pos
         self.x = pos[0]
         self.shape = shape
+        self.shape.collision_type = 4
         self.shape.body = self.body
         self.space.add(self.body, self.shape)
         self.health = health
