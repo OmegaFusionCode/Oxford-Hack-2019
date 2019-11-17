@@ -35,7 +35,7 @@ class Entity(object):
             self.space.remove(self.shape)
         except:
             pass
-    
+
     def sidescroll(self):
         self.body.position = (self.body.position[0]-2, self.body.position[1])
 
@@ -62,6 +62,7 @@ class Character(Entity):
         dir_path = os.path.dirname(os.path.realpath(__file__))
         self.gunSound = pygame.mixer.Sound(os.path.join(dir_path, "sounds/sound_effects/Gun9.wav"))
         self.gunSound.set_volume(0.15)
+        self.health = 500.0
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
         self.shldrImg = pygame.image.load(os.path.join(dir_path, 'playerShoulder.png'))
@@ -101,12 +102,18 @@ class Character(Entity):
         else:
             self.thrusting = False
             self.body.apply_force_at_local_point(Vec2d(0,-5000), self.body.center_of_gravity)
-        
+
         if self.body.velocity[1] > self.maxVel:
             self.body.velocity = (self.body.velocity[0], self.maxVel)
         elif self.body.velocity[1] < self.minVel:
             self.body.velocity = (self.body.velocity[0], self.minVel)
 
+    def takeDamage(self, damage):
+        self.health -= damage
+        if self.health <= 0:
+            print("You were killed!")
+        else:
+            print("Your health was reduced to",round(self.health))
 
     def draw(self):
         x,y = functions.convert(self.body.position)
@@ -191,7 +198,7 @@ class Projectile(Entity):
         self.body.velocity = (speed*math.cos(angle), parentVelocity[1]-speed*math.sin(angle))
 
         self.shape = pymunk.Circle(self.body, radius)
-        
+
         if friendly:
             self.shape.collision_type = 1
         else:
