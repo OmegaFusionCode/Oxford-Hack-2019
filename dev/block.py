@@ -29,20 +29,42 @@ class Block(Entity):
         self.health = self.health - damage
 
         soundString = ""
+        volume = 0.15
+
         if self.material.matType == 0:
             soundString = "metal_collision.wav"
         elif self.material.matType == 1:
             soundString = "stone_collision.wav"
+            volume = 0.45
         elif self.material.matType == 2:
             soundString = "glass_collision.wav"
+            volume = 0.35
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
         ext_path = os.path.join(dir_path, "sounds/sound_effects")
         hitSound = pygame.mixer.Sound(os.path.join(ext_path, soundString))
-        hitSound.set_volume(0.15)
+        hitSound.set_volume(volume)
         pygame.mixer.Channel(1).play(hitSound)
 
         if self.health <= 0:
+            soundString = ""
+            volume = 0.15
+
+            if self.material.matType == 0:
+                soundString = "metal_collision.wav"
+                volume = 0.25
+            elif self.material.matType == 1:
+                soundString = "stone_break.wav"
+                volume = 0.45
+            elif self.material.matType == 2:
+                soundString = "glass_break.wav"
+                volume = 0.35
+
+            dir_path = os.path.dirname(os.path.realpath(__file__))
+            ext_path = os.path.join(dir_path, "sounds/sound_effects")
+            hitSound = pygame.mixer.Sound(os.path.join(ext_path, soundString))
+            hitSound.set_volume(volume)
+            pygame.mixer.Channel(4).play(hitSound)
             self.remove()
 
     def update(self, dt):

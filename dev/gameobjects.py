@@ -37,7 +37,7 @@ class Entity(object):
             pass
 
     def sidescroll(self):
-        self.body.position = (self.body.position[0]-2, self.body.position[1])
+        self.body.position = (self.body.position[0]-6, self.body.position[1])
 
 
 class Character(Entity):
@@ -60,8 +60,8 @@ class Character(Entity):
         self.maxVel = 1500
         self.minVel = -1000
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        self.gunSound = pygame.mixer.Sound(os.path.join(dir_path, "sounds/sound_effects/Gun9.wav"))
-        self.gunSound.set_volume(0.10)
+        self.gunSound = pygame.mixer.Sound(os.path.join(dir_path, "sounds/sound_effects/Gun3.wav"))
+        self.gunSound.set_volume(0.20)
         self.health = 500.0
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
