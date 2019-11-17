@@ -144,11 +144,11 @@ class Barrel(Entity):
     def createProjectile(self,projectileType):
         if projectileType == 0:
             shotSpeed = 1500
-            self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, math.pi-self.currAngle, 10))
+            self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, math.pi-self.currAngle, 10, 250))
         elif projectileType == 1:
             shotSpeed = 2000
             self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, (math.pi-self.currAngle) + (5 * (math.pi/180)), 7))
-            self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, math.pi-self.currAngle, 7))
+            self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, math.pi-self.currAngle, 7, 250))
             self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, (math.pi-self.currAngle) - (5 * (math.pi/180)), 7))
 
     def update(self, dt):
