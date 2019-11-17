@@ -66,6 +66,8 @@ class Block(Entity):
             hitSound.set_volume(volume)
             pygame.mixer.Channel(4).play(hitSound)
             self.remove()
+            return 100
+        return 0
 
     def update(self, dt):
         if self.body.position[1] < -200:

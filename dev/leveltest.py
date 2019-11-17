@@ -113,7 +113,7 @@ class GameWindow(object):
             for shape in arbiter.shapes:
                 if shape.collision_type in (3, 4):
                     if damage >= 15:
-                        shape.body.entity_ref.takeDamage(damage)
+                        self.score += shape.body.entity_ref.takeDamage(damage)
             projectileDestroyOnImpact(arbiter, space, data)
 
         def damageBlockEnemy(arbiter, space, data):
@@ -122,7 +122,7 @@ class GameWindow(object):
             for shape in arbiter.shapes:
                 if shape.collision_type in (3, 4):
                     if damage >= 15:
-                        shape.body.entity_ref.takeDamage(damage)
+                        self.score += shape.body.entity_ref.takeDamage(damage) // 2
 
         def enemyProjectileDamageCharacter(arbiter, space, data):
             for shape in arbiter.shapes:
@@ -161,7 +161,7 @@ class GameWindow(object):
             for shape in arbiter.shapes:
                 if shape.collision_type == 4:
                     if damage >= 5:
-                        shape.body.entity_ref.takeDamage(damage)
+                        self.score += shape.body.entity_ref.takeDamage(damage) // 2
 
         def floorDamageBlock(arbiter, space, data):
             for shape in arbiter.shapes:
@@ -171,7 +171,7 @@ class GameWindow(object):
             for shape in arbiter.shapes:
                 if shape.collision_type == 3:
                     if damage >= 5:
-                        shape.body.entity_ref.takeDamage(damage)
+                        self.score += shape.body.entity_ref.takeDamage(damage) // 2
 
         self.enemyProjectileIgnoreBlocks_handler = self.space.add_collision_handler(2,3)
         self.enemyProjectileIgnoreBlocks_handler.begin = enemyProjectileIgnoreBlocks

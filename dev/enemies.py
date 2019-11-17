@@ -34,6 +34,8 @@ class Enemy(Entity):
         pygame.mixer.Channel(3).play(hitSound)
         if self.health <= 0:
             self.die()
+            return 500
+        return 0
     def die(self):
         self.alive = False
         self.remove()
