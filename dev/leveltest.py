@@ -52,11 +52,13 @@ class GameWindow(object):
         self.space.gravity = 0, -1000
 
         self.entities.append(Character(self.screen, self.space, self.entities, (100, 600)))
-        self.entities.append(Floor(self.screen, self.space, self.entities, 0, self.screen.get_width()))
+        self.entities.append(Floor(self.screen, self.space, self.entities, 0, 2*self.screen.get_width()))
 
         # Make the level parts
 
         LevelMaker(self.screen, self.space, self.entities).makeLevels(INITIAL_X)
+        #box = Block(self.screen, self.space, self.entities, (300, 120), 200, 20, metal)
+        #floor = Floor(self.screen, self.space, self.entities, 200, 200)
 
         #self.floor = pymunk.Segment(self.space.static_body, (0, 5), (self.screenX, 5), 10)
         #self.floor.body.position = 0, 5
