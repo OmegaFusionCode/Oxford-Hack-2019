@@ -59,6 +59,7 @@ class Character(Entity):
         self.imageIndex = 0
         self.maxVel = 1500
         self.minVel = -1000
+        self.health = 500.0
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
         self.shldrImg = pygame.image.load(os.path.join(dir_path, 'playerShoulder.png'))
@@ -104,6 +105,12 @@ class Character(Entity):
         elif self.body.velocity[1] < self.minVel:
             self.body.velocity = (self.body.velocity[0], self.minVel)
 
+    def takeDamage(self, damage):
+        self.health -= damage
+        if self.health <= 0:
+            print("You were killed!")
+        else:
+            print(f"Your health was reduced to {round(self.health)}!")
 
     def draw(self):
         x,y = functions.convert(self.body.position)

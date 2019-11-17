@@ -98,6 +98,23 @@ class GameWindow(object):
                 if shape.collision_type in (3, 4):
                     shape.body.entity_ref.takeDamage(damage)
 
+        def enemyProjectileDamageCharacter(arbiter, space, data):
+            for shape in arbiter.shapes:
+                if shape.collision_type == 2:
+                    impulse = functions.magnitude(shape.body.velocity) * shape.body.mass
+            damage = impulse / 10000
+            for shape in arbiter.shapes:
+                if shape.collision_type == 5:
+                    shape.body.entity_ref.takeDamage(damage)
+                elif shape.collision_type == 2:
+                    try:
+                        self.entities.remove(shape.body.entity_ref)
+                    except ValueError:
+                        print("Exception Handled. list.remove(x): x not in list")
+                        pass
+                    self.space.remove(shape.body, shape)
+            return False
+
 
         self.enemyProjectileIgnoreBlocks_handler = self.space.add_collision_handler(2,3)
         self.enemyProjectileIgnoreBlocks_handler.begin = enemyProjectileIgnoreBlocks
@@ -116,6 +133,15 @@ class GameWindow(object):
 
         self.projectileDamageEnemy_handler = self.space.add_collision_handler(1,4)
         self.projectileDamageEnemy_handler.post_solve = damageBlockEnemy
+
+        self.enemyDamageBlock_handler = self.space.add_collision_handler(3,4)
+        self.enemyDamageBlock_handler.post_solve = damageBlockEnemy
+
+        self.enemyProjectileDamageCharacter_handler = self.space.add_collision_handler(2,5)
+        self.enemyProjectileDamageCharacter_handler.pre_solve = enemyProjectileDamageCharacter
+
+        #self.enemyDamageCharacter
+        #self.blockDamageCharacter
 
     @gameloop
     def gameLoop(self):
