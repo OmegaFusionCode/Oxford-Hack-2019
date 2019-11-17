@@ -1,4 +1,5 @@
 import math
+import os
 
 import pygame
 import pymunk
@@ -35,21 +36,51 @@ class Enemy(Entity):
 class Enemy1(Enemy):
     def __init__(self, screen, space, entities, pos, player):
         mass = 1000
-        size = (100,60)
+        size = (160/2,132/2)
         moment = pymunk.moment_for_box(mass, size)
         shape = pymunk.Poly.create_box(None, size, 0)
         health = 100
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        self.bodyImg = pygame.image.load(os.path.join(dir_path, "turretBody.png")).convert_alpha()
+        self.bodyImg = pygame.transform.scale(self.bodyImg, (128,128))
+
+        self.gunImg = pygame.image.load(os.path.join(dir_path, "turret1Gun.png")).convert_alpha()
+        self.gunImg = pygame.transform.scale(self.gunImg, (128,128))
+
         super().__init__(screen, space, entities, pos, moment, shape, mass, health, player)
 
         # Add the turret barrel as an attached entity
-        self.barrel = Barrel(self.screen, self.space, self.entities, self, 70, 0, math.pi)
-        self.entities.append(self.barrel)
+        self.barrel = Barrel(self.screen, self.space, self.entities, self, 0, math.pi)
+
+    def update(self, dt):
+        if self.alive:
+            self.barrel.baseX, self.barrel.baseY = functions.convert((self.body.position[0], self.body.position[1]))
+
+            self.barrel.endX = self.barrel.baseX - (92/2) * math.cos(self.barrel.currAngle)
+            self.barrel.endY = self.barrel.baseY + (92/2) * math.sin(self.barrel.currAngle)
+
+            characterPos = functions.convert(self.player.body.position)
+
+            self.barrel.delta_x = characterPos[0] - self.barrel.baseX
+            self.barrel.delta_y = characterPos[1] - self.barrel.baseY
+            self.barrel.currAngle = math.pi-(math.atan2(self.barrel.delta_y, self.barrel.delta_x) + (20*(math.pi/180)))
+
+
+            if self.barrel.cooldown <= 0:
+                self.barrel.createProjectile()
+                self.barrel.cooldown = 1.5
+            self.barrel.cooldown -= dt
+        else:
+            self.remove()
+
+    def draw(self):
+        functions.rotate(self.screen, self.bodyImg, functions.convert(self.body.position),(132/2,192/2), math.degrees(self.body.angle))
+        self.barrel.draw()
 
 class Barrel(Entity):
-    def __init__(self, screen, space, entities, parent, length, minAngle, maxAngle):
+    def __init__(self, screen, space, entities, parent, minAngle, maxAngle):
         super().__init__(screen, space, entities)
         self.parent = parent
-        self.length = length
         self.maxAngle = maxAngle
         self.minAngle = minAngle
         self.currAngle = (minAngle + maxAngle) / 2
@@ -60,7 +91,7 @@ class Barrel(Entity):
         shotSpeed = 1500
         """pX = self.delta_x
         pY = (self.delta_y) * -1
-        topHalfThetaOne = -pX + math.sqrt(pX**2 - 4*((-500 * pX**2)/shotSpeed**2)*((-(500 * pX**2)/shotSpeed**2)-pY)) 
+        topHalfThetaOne = -pX + math.sqrt(pX**2 - 4*((-500 * pX**2)/shotSpeed**2)*((-(500 * pX**2)/shotSpeed**2)-pY))
         topHalfThetaTwo = -pX - math.sqrt(pX**2 - 4*((-500 * pX**2)/shotSpeed**2)*((-(500 * pX**2)/shotSpeed**2)-pY))
         botHalf = 2*((-500 * pX**2)/shotSpeed**2)
 
@@ -76,9 +107,10 @@ class Barrel(Entity):
             shotAngle = theta2
 
         print("angle: " + str(shotAngle * (180/math.pi)))"""
-        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, self.currAngle, 10))
-    
+        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX, self.endY), shotSpeed, self.parent.body.velocity, math.pi-self.currAngle, 10))
+
     def update(self, dt):
+        """
         if(self.parent.alive):
             currentPos = functions.convert(self.parent.body.position)
             characterPos = functions.convert(self.parent.player.body.position)
@@ -92,16 +124,13 @@ class Barrel(Entity):
             self.delta_y = self.targetY - self.baseY
             self.currAngle = math.atan2(self.delta_y, self.delta_x) + (20*(math.pi/180))
 
-            self.endX = self.baseX + self.length * math.cos(self.currAngle)
-            self.endY = self.baseY + self.length * math.sin(self.currAngle)
-
             if self.cooldown <= 0:
                 self.createProjectile()
                 self.cooldown = 1.5
             self.cooldown -= dt
         else:
             self.remove()
-
+        """
 
     def draw(self):
-        pygame.draw.line(self.screen, (255,0,0), (self.baseX, self.baseY), (self.endX, self.endY))
+        functions.rotate(self.screen, self.parent.gunImg, (self.baseX, self.baseY),(116/2,192/2), math.degrees(self.currAngle))
