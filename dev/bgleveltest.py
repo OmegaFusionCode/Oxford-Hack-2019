@@ -18,7 +18,6 @@ from parallax import BackgroundLayer
 FRAMERATE = 60
 INITIAL_X = 400
 
-
 def gameloop(func):
     def wrapper(*args, **kwargs):
         while True:
@@ -51,9 +50,12 @@ class GameWindow(object):
         self.options = DrawOptions(self.screen)
         self.clock = pygame.time.Clock()
 
+        songs = ["sounds\music\drive_with_me_looped.wav","sounds\music\motivation_looped.wav"]
+
         dir_path = os.path.dirname(os.path.realpath(__file__))
         pygame.mixer.init()
-        pygame.mixer.music.load(os.path.join(dir_path, ""))
+        pygame.mixer.music.load(os.path.join(dir_path, random.choice(songs)))
+        pygame.mixer.music.play(-1,0.0)
         
     def _setupSpace(self):
         self.space = pymunk.Space()
@@ -102,7 +104,6 @@ class GameWindow(object):
         self.bgs = [BackgroundLayer(self.screen, "bg_mountains.png", 0.25, self.screen.get_size()[1]-800),
                     BackgroundLayer(self.screen, "bg_hills.png", 0.75, self.screen.get_size()[1]-500),
                     BackgroundLayer(self.screen, "bg_foreground.png", 1.5, self.screen.get_size()[1]-299)]
-
 
     @gameloop
     def gameLoop(self):
