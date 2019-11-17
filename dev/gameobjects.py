@@ -32,6 +32,9 @@ class Entity(object):
             self.space.remove(self.shape)
         except:
             pass
+    
+    def sidescroll(self):
+        self.body.position = (self.body.position[0]-1, self.body.position)
 
 
 class Character(Entity):
@@ -43,7 +46,7 @@ class Character(Entity):
         self.body.entity_ref = self
         self.body.position = pos
         self.x = pos[0]
-        self.shape = pymunk.Poly.create_box(self.body, (2,50), 10)
+        self.shape = pymunk.Poly.create_box(self.body, (30,130), 5)
         self.space.add(self.body, self.shape)
         self.target = TargetLine(self.screen, self.space, self.entities, self, 122, -11/24 * math.pi, math.pi * 7/24)
         self.entities.append(self.target)
@@ -114,19 +117,34 @@ class TargetLine(Entity):
     #        self.createProjectile()
 
     def update(self, dt):
-        if pygame.key.get_pressed()[pygame.K_s]:
-            if self.currAngle < self.maxAngle:
-                self.currAngle += math.pi / 48
-        if pygame.key.get_pressed()[pygame.K_w]:
-            if self.currAngle > self.minAngle:
-                self.currAngle -= math.pi / 48
+        #if pygame.key.get_pressed()[pygame.K_s]:
+        #    if self.currAngle < self.maxAngle:
+        #        self.currAngle += math.pi / 48
+        #if pygame.key.get_pressed()[pygame.K_w]:
+        #    if self.currAngle > self.minAngle:
+        #        self.currAngle -= math.pi / 48
+        self.centreX, self.centreY = functions.convert((self.parent.body.position[0]-4,self.parent.body.position[1]+24))
+        mouseX, mouseY = pygame.mouse.get_pos()
+        try:
+            angle = math.atan((mouseY-self.centreY) / (mouseX-self.centreX))
+            if angle >= self.minAngle and angle <= self.maxAngle:
+                self.currAngle = angle
+            elif angle < self.minAngle:
+                self.currAngle = self.minAngle
+            else:
+                self.currAngle = self.maxAngle
+        except:
+            angle = math.pi/2
+
         if pygame.mouse.get_pressed()[0] and self.cooldown <= 0:
             self.createProjectile()
             self.cooldown = 1
         self.cooldown -= dt
-        self.centreX, self.centreY = functions.convert((self.parent.body.position[0]-4,self.parent.body.position[1]+24))
         self.endX = self.centreX + self.length*math.cos(self.currAngle+0.40489)
         self.endY = self.centreY + self.length*math.sin(self.currAngle+0.40489)
+
+    def sidescroll(self):
+        pass
 
     """
     def draw(self):
@@ -180,3 +198,6 @@ class Floor(Entity):
         self.body.entity_ref = self
         self.body.position = (startX, 5)
         self.space.add(self.shape)
+
+    def sidescroll():
+        pass
