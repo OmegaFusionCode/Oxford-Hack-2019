@@ -134,3 +134,70 @@ class LevelMaker(object):
         self.entities.append(blockTop1)
 
         return 800
+    
+    def level4(self, initialX, player):
+        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+
+        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 220), 400, 20, metal)
+        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 220), 400, 20, metal)
+        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+410, 120), 200, 20, metal)
+        blockBottom4 = Block(self.screen, self.space, self.entities, (initialX+590, 120), 200, 20, metal)
+
+        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+500, 230), 20, 200, metal)
+
+        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+410, 340), 200, 20, metal)
+        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+590, 340), 200, 20, metal)
+
+        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+200, 430), 20, 200, metal)
+        blockTop2 = Block(self.screen, self.space, self.entities, (initialX+500, 450), 20, 200, metal)
+
+        self.entities.append(floor)
+
+        self.entities.append(blockBottom1)
+        self.entities.append(blockBottom2)
+        self.entities.append(blockBottom3)
+        self.entities.append(blockBottom4)
+
+        self.entities.append(blockMiddle1)
+                
+        self.entities.append(blockUpper1)
+        self.entities.append(blockUpper2)
+
+        self.entities.append(blockTop1)
+        self.entities.append(blockTop2)
+
+        return 800
+
+    def level5(self, initialX, player):
+        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+
+        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
+        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 120), 200, 20, metal)
+        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+470, 120), 200, 20, metal)
+        blockBottom4 = Block(self.screen, self.space, self.entities, (initialX+650, 120), 200, 20, metal)
+
+        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+380, 230), 20, 560, metal)
+
+        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+290, 340), 200, 20, metal)
+        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+470, 340), 200, 20, metal)
+        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+650, 340), 200, 20, metal)
+
+        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+470, 450), 20, 380, metal)
+
+        self.entities.append(floor)
+
+        self.entities.append(blockBottom1)
+        self.entities.append(blockBottom2)
+        self.entities.append(blockBottom3)
+        self.entities.append(blockBottom4)
+
+        self.entities.append(blockMiddle1)
+                
+        self.entities.append(blockUpper1)
+        self.entities.append(blockUpper2)
+        self.entities.append(blockUpper3)
+
+        self.entities.append(blockTop1)
+
+        return 800
+        
