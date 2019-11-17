@@ -13,7 +13,7 @@ from block import Block
 from enemies import Enemy1, Enemy2
 
 
-FRAMERATE = 30
+FRAMERATE = 60
 
 
 
@@ -78,7 +78,7 @@ class GameWindow(object):
     @gameloop
     def gameLoop(self):
         self.dt = self.clock.tick(FRAMERATE) / 1000
-        self.space.step(1/60)
+        self.space.step(1/(2*FRAMERATE))
         self._handleEvents()
         self._executeLogic()
         self._drawObjects()
@@ -108,5 +108,5 @@ class GameWindow(object):
 
 
 if __name__ == "__main__":
-    myWindow = GameWindow(1200, 600, "Test")
+    myWindow = GameWindow(1900, 1000, "Test")
     myWindow.run()
