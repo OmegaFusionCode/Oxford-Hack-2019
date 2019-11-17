@@ -21,7 +21,7 @@ def metal():
     return Material("metal.png", 1.0, 0.9, 100)
 
 def stone():
-    return Material("stone", 0.8, 0.9, 50)
+    return Material("stone.png", 0.8, 0.9, 50)
 
 def glass():
-    return Material("glass", 0.2, 0.9, 10)
+    return Material("glass.png", 0.2, 0.9, 10)
