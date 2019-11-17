@@ -71,7 +71,7 @@ class GameWindow(object):
 
     def _setupCollisionHandlers(self):
 
-        def projectile_post_solve(arbiter, space, data):
+        def projectileDestroyOnImpact(arbiter, space, data):
             for shape in arbiter.shapes:
                 if shape.collision_type == 1:
                     try:
@@ -81,14 +81,20 @@ class GameWindow(object):
                         pass
                     self.space.remove(shape.body, shape)
 
-        def enemy_projectile_begin(arbiter, space, data):
+        def enemyProjectileIgnoreBlocks(arbiter, space, data):
             return False
 
-        self.enemyProjectileCollisionHandler = self.space.add_collision_handler(2,3)
-        self.enemyProjectileCollisionHandler.begin = enemy_projectile_begin
+        def projectileIgnoreEnemyProjectile(arbiter, space, data):
+            return False
 
-        self.projectileCollisionHandler = self.space.add_wildcard_collision_handler(1)
-        self.projectileCollisionHandler.post_solve = projectile_post_solve
+        self.enemyProjectileIgnoreBlocks_handler = self.space.add_collision_handler(2,3)
+        self.enemyProjectileIgnoreBlocks_handler.begin = enemyProjectileIgnoreBlocks
+
+        self.projectileDestroyOnImpact_handler = self.space.add_wildcard_collision_handler(1)
+        self.projectileDestroyOnImpact_handler.post_solve = projectileDestroyOnImpact
+
+        self.projectileIgnoreEnemyProjectile_handler = self.space.add_collision_handler(1,2)
+        self.projectileIgnoreEnemyProjectile_handler.begin = projectileIgnoreEnemyProjectile
 
 
     @gameloop
