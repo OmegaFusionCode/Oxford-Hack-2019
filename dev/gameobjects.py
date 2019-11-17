@@ -96,8 +96,6 @@ class Character(Entity):
             self.thrusting = False
             self.body.apply_force_at_local_point(Vec2d(0,-5000), self.body.center_of_gravity)
         
-        print(self.screen.get_size())
-
         if self.body.velocity[1] > self.maxVel:
             self.body.velocity = (self.body.velocity[0], self.maxVel)
         elif self.body.velocity[1] < self.minVel:
