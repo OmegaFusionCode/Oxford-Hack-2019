@@ -57,7 +57,7 @@ class GameWindow(object):
         dir_path = os.path.dirname(os.path.realpath(__file__))
         pygame.mixer.music.load(os.path.join(dir_path, random.choice(songs)))
         pygame.mixer.music.play(-1,0.0)
-        pygame.mixer.music.set_volume(0.35)
+        pygame.mixer.music.set_volume(0.85)
 
 
     def _setupSpace(self):
@@ -107,7 +107,7 @@ class GameWindow(object):
             damage = impulse / 10000
             for shape in arbiter.shapes:
                 if shape.collision_type in (3, 4):
-                    if damage >= 5:
+                    if damage >= 15:
                         shape.body.entity_ref.takeDamage(damage)
 
         def enemyProjectileDamageCharacter(arbiter, space, data):

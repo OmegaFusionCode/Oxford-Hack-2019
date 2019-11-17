@@ -29,7 +29,7 @@ class Enemy(Entity):
         self.health = self.health - damage
         dir_path = os.path.dirname(os.path.realpath(__file__))
         hitSound = pygame.mixer.Sound(os.path.join(dir_path, "sounds/sound_effects/turret_hit.wav"))
-        hitSound.set_volume(0.1)
+        hitSound.set_volume(0.3)
         pygame.mixer.Channel(3).play(hitSound)
         if self.health <= 0:
             self.die()
