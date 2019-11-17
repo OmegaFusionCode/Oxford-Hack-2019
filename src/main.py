@@ -101,7 +101,7 @@ class GameWindow(object):
                     try:
                         self.entities.remove(shape.body.entity_ref)
                     except ValueError:
-                        print("Exception Handled. list.remove(x): x not in list")
+                        #print("Exception Handled. list.remove(x): x not in list")
                         pass
                     self.space.remove(shape.body, shape)
 
@@ -143,7 +143,7 @@ class GameWindow(object):
                     try:
                         self.entities.remove(shape.body.entity_ref)
                     except ValueError:
-                        print("Exception Handled. list.remove(x): x not in list")
+                        #print("Exception Handled. list.remove(x): x not in list")
                         pass
                     self.space.remove(shape.body, shape)
             return False
@@ -151,14 +151,14 @@ class GameWindow(object):
         def enemyDamageCharacter(arbiter, space, data):
             for shape in arbiter.shapes:
                 if shape.collision_type == 5:
-                    print("You touched an enemy and died!")
+                    #print("You touched an enemy and died!")
                     self.alive = False
             return False
 
         def blockDamageCharacter(arbiter, space, data):
             for shape in arbiter.shapes:
                 if shape.collision_type == 5:
-                    print("You touched a block and died!")
+                    #print("You touched a block and died!")
                     self.alive = False
             return False
 
@@ -233,10 +233,10 @@ class GameWindow(object):
 
     def _handleEvents(self):
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN and self.alive is None and event.key == pygame.K_SPACE:
+            if event.type == pygame.KEYDOWN and self.alive is None and event.key == pygame.K_RETURN:
                 self.__init__(self.screenX, self.screenY)
             if self.alive:
                 for entity in self.entities:
@@ -271,17 +271,47 @@ class GameWindow(object):
             floorRect = pygame.Rect(0, self.screen.get_height()-20, self.screen.get_width(), 20)
             pygame.draw.rect(self.screen, (64,64,64), floorRect)
 
-            healthText = self.font.render("Health: {0}".format(round(self.player.health)), True, (0,0,0))
+            healthText = self.font.render("Health:".format(round(self.player.health)), True, (0,0,0))
             healthTextRect = healthText.get_rect()
             healthTextRect.left = 10
             healthTextRect.top = 10
             self.screen.blit(healthText, healthTextRect)
+            
+            rectHealth = healthText.get_rect()
+            rectHealth.width = self.player.health
+            rectHealth.left = healthTextRect.right + 15
+            rectHealth.top = 10
+            pygame.draw.rect(self.screen, (255,0,0), rectHealth)
+
+            rectHealth.width = 500
+            rectHealth.left = healthTextRect.right + 15
+            rectHealth.top = 10
+            pygame.draw.rect(self.screen, (0,0,0), rectHealth, 4)
 
             scoreText = self.font.render("Score: {0}".format(self.score), True, (0,0,0))
             scoreTextRect = healthText.get_rect()
             scoreTextRect.left = 10
-            scoreTextRect.top = 30
+            scoreTextRect.top = 50
             self.screen.blit(scoreText, scoreTextRect)
+
+        else:
+            font1 = pygame.font.SysFont("Arial Black", 192)
+            text1 = font1.render("Game Over", True, (0,0,0))
+            rect1 = text1.get_rect()
+            rect1.center = (self.screen.get_width()//2, 300)
+            self.screen.blit(text1, rect1)
+
+            font2 = pygame.font.SysFont("Arial Black", 72)
+            text2 = font2.render("Score: {0}".format(self.score), True, (0,0,0))
+            rect2 = text2.get_rect()
+            rect2.center = (self.screen.get_width()//2, 520)
+            self.screen.blit(text2, rect2)
+
+            font3 = pygame.font.SysFont("Arial Black", 16)
+            text3 = font3.render("Press enter to play again", True, (0,0,0))
+            rect3 = text3.get_rect()
+            rect3.center = (self.screen.get_width()//2, self.screen.get_height()-50  )
+            self.screen.blit(text3, rect3)
 
         pygame.display.flip()
 
