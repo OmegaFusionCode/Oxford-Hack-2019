@@ -95,7 +95,6 @@ class GameWindow(object):
     def _backgroundSetup(self):
         self.bgs = [BackgroundLayer(self.screen, "bg.png", 0),
                     BackgroundLayer(self.screen, "bg_mountains.png", 0.25),
-                    BackgroundLayer(self.screen, "bg_clouds.png", 0.5),
                     BackgroundLayer(self.screen, "bg_hills.png", 0.75),
                     BackgroundLayer(self.screen, "bg_foreground.png", 1.5)]
 
