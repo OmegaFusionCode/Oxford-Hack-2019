@@ -42,16 +42,19 @@ class Character(Entity):
     def __init__(self, screen, space, entities, pos):
         super().__init__(screen, space, entities)
         mass = 1
+        self.height = 150
         self.body = pymunk.Body(mass, pymunk.inf)
         self.body.entity_ref = self
         self.body.position = pos
         self.x = pos[0]
-        self.shape = pymunk.Poly.create_box(self.body, (30,130), 5)
+        self.shape = pymunk.Poly.create_box(self.body, (30,self.height), 5)
         self.space.add(self.body, self.shape)
         self.target = TargetLine(self.screen, self.space, self.entities, self, 122, -11/24 * math.pi, math.pi * 7/24)
         self.entities.append(self.target)
         self.thrusting = False
         self.imageIndex = 0
+        self.maxVel = 1500
+        self.minVel = -1000
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
         self.shldrImg = pygame.image.load(os.path.join(dir_path, 'playerShoulder.png'))
@@ -77,11 +80,28 @@ class Character(Entity):
 
     def update(self, dt):
         self.body.position = (self.x, self.body.position[1])
+
+        topOfScreen = False
+        if self.body.position[1] > (self.screen.get_size()[1] - (self.height / 2)):
+            # if character is about to reach the top of the screen
+            self.body.position = (self.body.position[0], self.screen.get_size()[1] - (self.height / 2))
+            topOfScreen = True
+
         if pygame.key.get_pressed()[pygame.K_SPACE]:
             self.thrusting = True
-            self.body.apply_force_at_local_point(Vec2d(0,2000), self.body.center_of_gravity)
+            if not topOfScreen:
+                self.body.apply_force_at_local_point(Vec2d(0,8000), self.body.center_of_gravity)
         else:
             self.thrusting = False
+            self.body.apply_force_at_local_point(Vec2d(0,-5000), self.body.center_of_gravity)
+        
+        print(self.screen.get_size())
+
+        if self.body.velocity[1] > self.maxVel:
+            self.body.velocity = (self.body.velocity[0], self.maxVel)
+        elif self.body.velocity[1] < self.minVel:
+            self.body.velocity = (self.body.velocity[0], self.minVel)
+
 
     def draw(self):
         x,y = functions.convert(self.body.position)
@@ -138,7 +158,7 @@ class TargetLine(Entity):
 
         if pygame.mouse.get_pressed()[0] and self.cooldown <= 0:
             self.createProjectile()
-            self.cooldown = 1
+            self.cooldown = 0.25
         self.cooldown -= dt
         self.endX = self.centreX + self.length*math.cos(self.currAngle+0.40489)
         self.endY = self.centreY + self.length*math.sin(self.currAngle+0.40489)
