@@ -7,7 +7,11 @@ from pymunk.vec2d import Vec2d
 
 import functions
 
+pygame.init()
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+playerBulletImg = pygame.image.load(os.path.join(dir_path, "playerBullet.png")).convert_alpha()
+enemyBulletImg = pygame.image.load(os.path.join(dir_path, "enemyBullet.png")).convert_alpha()
 
 class Entity(object):
 
@@ -191,6 +195,7 @@ class Projectile(Entity):
 
     def __init__(self, screen, space, entities, pos, speed, parentVelocity, angle, radius, mass, friendly = False):
         self.mass = mass
+        self.radius = radius
         super().__init__(screen, space, entities)
         self.body = pymunk.Body(self.mass, pymunk.moment_for_circle(self.mass, 0, radius))
         self.body.entity_ref = self
@@ -201,8 +206,10 @@ class Projectile(Entity):
 
         if friendly:
             self.shape.collision_type = 1
+            self.image = playerBulletImg
         else:
             self.shape.collision_type = 2
+            self.image = pygame.transform.scale(enemyBulletImg, (radius*2, radius*2))
 
         self.space = space
         self.space.add(self.body, self.shape)
@@ -221,6 +228,9 @@ class Projectile(Entity):
     def update(self, dt):
         if self.body.position[0] < -5 or self.body.position[0] > self.screen.get_width() + 5 or self.body.position[1] < -5:
             self.remove()
+
+    def draw(self):
+        self.screen.blit(self.image, functions.convert((self.body.position[0]-self.radius, self.body.position[1] + self.radius)))
 
 
 class Floor(Entity):

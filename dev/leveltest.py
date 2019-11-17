@@ -8,6 +8,12 @@ import pygame
 import pymunk
 from pymunk.pygame_util import DrawOptions
 
+pygame.mixer.pre_init(22050, -16, 2, 512)
+pygame.mixer.init()
+pygame.init()
+pygame.display.set_mode((1800, 900))
+
+
 from gameobjects import TargetLine, Character, Projectile, Floor
 from materials import Material, metal, stone, glass
 from block import Block
@@ -15,9 +21,9 @@ from levelmaker import LevelMaker
 from parallax import BackgroundLayer
 import functions
 
-
 FRAMERATE = 60
 INITIAL_X = 1800
+
 
 
 def gameloop(func):
@@ -30,9 +36,9 @@ def gameloop(func):
 
 class GameWindow(object):
 
-    def __init__(self, screenX, screenY, gameName):
+    def __init__(self, screenX, screenY):
         self._setupGeneral()
-        self._setupPygame(screenX, screenY, gameName)
+        self._setupPygame(screenX, screenY)
         self._setupSpace()
         self._setupCollisionHandlers()
         self._backgroundSetup()
@@ -42,12 +48,7 @@ class GameWindow(object):
         self.count = 0
         self.dt = 0
 
-    def _setupPygame(self, screenX, screenY, gameName):
-        pygame.mixer.pre_init(22050, -16, 2, 512)
-        pygame.mixer.init()
-        pygame.init()
-        pygame.display.set_mode((screenX, screenY))
-        pygame.display.set_caption(gameName)
+    def _setupPygame(self, screenX, screenY):
         self.screen = pygame.display.get_surface()
         self.screenX = screenX
         self.screenY = screenY
@@ -103,6 +104,15 @@ class GameWindow(object):
 
         def enemyProjectileIgnoreEnemy(arbiter, space, data):
             return False
+
+        def projectileDamageBlockEnemy(arbiter, space, data):
+            impulse = functions.magnitude(arbiter.total_impulse)
+            damage = impulse / 10000
+            for shape in arbiter.shapes:
+                if shape.collision_type in (3, 4):
+                    if damage >= 15:
+                        shape.body.entity_ref.takeDamage(damage)
+            projectileDestroyOnImpact(arbiter, space, data)
 
         def damageBlockEnemy(arbiter, space, data):
             impulse = functions.magnitude(arbiter.total_impulse)
@@ -174,10 +184,10 @@ class GameWindow(object):
         self.enemyProjectileIgnoreEnemy_hander.begin = enemyProjectileIgnoreEnemy
 
         self.projectileDamageBlock_handler = self.space.add_collision_handler(1,3)
-        self.projectileDamageBlock_handler.post_solve = damageBlockEnemy
+        self.projectileDamageBlock_handler.post_solve = projectileDamageBlockEnemy
 
         self.projectileDamageEnemy_handler = self.space.add_collision_handler(1,4)
-        self.projectileDamageEnemy_handler.post_solve = damageBlockEnemy
+        self.projectileDamageEnemy_handler.post_solve = projectileDamageBlockEnemy
 
         self.enemyDamageBlock_handler = self.space.add_collision_handler(3,4)
         self.enemyDamageBlock_handler.post_solve = damageBlockEnemy
@@ -232,7 +242,7 @@ class GameWindow(object):
         self.screen.blit(self.bg1, (0,0))
         for bg in self.bgs:
             bg.draw()
-        self.space.debug_draw(self.options)
+        #self.space.debug_draw(self.options)
         for entity in self.entities:
             entity.draw()
         pygame.display.flip()
@@ -243,5 +253,5 @@ class GameWindow(object):
 
 
 if __name__ == "__main__":
-    myWindow = GameWindow(1800, 900, "Test")
+    myWindow = GameWindow(1800, 900)
     myWindow.run()
