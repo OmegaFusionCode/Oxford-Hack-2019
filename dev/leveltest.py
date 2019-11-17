@@ -248,7 +248,7 @@ class GameWindow(object):
         for entity in self.entities:
             entity.draw()
 
-        floorRect = pygame.Rect(0, 880, 1800, 20)
+        floorRect = pygame.Rect(0, self.screen.get_height()-20, self.screen.get_width(), 20)
         pygame.draw.rect(self.screen, (64,64,64), floorRect)
 
         healthText = self.font.render("Health: {0}".format(round(self.player.health)), True, (0,0,0))
@@ -262,7 +262,7 @@ class GameWindow(object):
         scoreTextRect.left = 10 
         scoreTextRect.top = 30 
         self.screen.blit(scoreText, scoreTextRect)
-        
+
         pygame.display.flip()
 
     def run(self):
