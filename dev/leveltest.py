@@ -11,7 +11,7 @@ from gameobjects import TargetLine, Character, Projectile, Floor
 from materials import Material, metal, stone, glass
 from block import Block
 from levelmaker import LevelMaker
-                            
+
 
 FRAMERATE = 60
 INITIAL_X = 400
@@ -47,7 +47,7 @@ class GameWindow(object):
         self.screenY = screenY
         self.options = DrawOptions(self.screen)
         self.clock = pygame.time.Clock()
-    
+
     def _setupSpace(self):
         self.space = pymunk.Space()
         self.space.gravity = 0, -1000
@@ -83,7 +83,7 @@ class GameWindow(object):
 
         def enemy_projectile_begin(arbiter, space, data):
             return False
-            
+
         self.enemyProjectileCollisionHandler = self.space.add_collision_handler(2,3)
         self.enemyProjectileCollisionHandler.begin = enemy_projectile_begin
 
@@ -114,6 +114,7 @@ class GameWindow(object):
             entity.sidescroll()
 
     def _drawObjects(self):
+        pygame.display.set_caption("FPS: " + str(self.clock.get_fps()))
         self.screen.fill((0,0,0))
         self.space.debug_draw(self.options)
         for entity in self.entities:
