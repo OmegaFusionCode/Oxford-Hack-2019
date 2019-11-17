@@ -2,6 +2,7 @@ import sys
 import time
 import math
 import random
+import os
 
 import pygame
 import pymunk
@@ -42,7 +43,7 @@ class GameWindow(object):
 
     def _setupPygame(self, screenX, screenY, gameName):
         pygame.init()
-        pygame.display.set_mode((screenX, screenY),pygame.FULLSCREEN)
+        pygame.display.set_mode((screenX, screenY))
         pygame.display.set_caption(gameName)
         self.screen = pygame.display.get_surface()
         self.screenX = screenX
@@ -93,8 +94,8 @@ class GameWindow(object):
         self.projectileCollisionHandler.post_solve = projectile_post_solve
 
     def _backgroundSetup(self):
-        self.bgs = [BackgroundLayer(self.screen, "bg.png", 0, 0),
-                    BackgroundLayer(self.screen, "bg_mountains.png", 0.25, self.screen.get_size()[1]-800),
+        self.bg1 = pygame.image.load(os.path.join(os.path.dirname(os.path.realpath(__file__)), "background/bg.png")).convert_alpha()
+        self.bgs = [BackgroundLayer(self.screen, "bg_mountains.png", 0.25, self.screen.get_size()[1]-800),
                     BackgroundLayer(self.screen, "bg_hills.png", 0.75, self.screen.get_size()[1]-500),
                     BackgroundLayer(self.screen, "bg_foreground.png", 1.5, self.screen.get_size()[1]-299)]
 
@@ -126,6 +127,7 @@ class GameWindow(object):
     def _drawObjects(self):
         pygame.display.set_caption("FPS: " + str(self.clock.get_fps()))
         self.screen.fill((0,0,0))
+        self.screen.blit(self.bg1, (0,0))
         for bg in self.bgs:
             bg.draw()
         self.space.debug_draw(self.options)
