@@ -19,6 +19,7 @@ class Enemy(Entity):
         self.body.entity_ref = self
         self.x = pos[0]
         self.shape = shape
+        self.shape.friction = 0.8
         self.shape.collision_type = 4
         self.shape.body = self.body
         self.space.add(self.body, self.shape)
