@@ -109,7 +109,6 @@ class Enemy2(Enemy):
             self.barrel.delta_y = characterPos[1] - self.barrel.baseY
             self.barrel.currAngle = math.pi-(math.atan2(self.barrel.delta_y, self.barrel.delta_x) + (10*(math.pi/180)))
 
-
             if self.barrel.cooldown <= 0:
                 self.barrel.createProjectile(1)
                 self.barrel.cooldown = 2.5
