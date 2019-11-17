@@ -116,8 +116,10 @@ class Character(Entity):
         self.health -= damage
         if self.health <= 0:
             print("You were killed!")
+            return False
         else:
             print("Your health was reduced to",round(self.health))
+            return True
 
     def draw(self):
         x,y = functions.convert(self.body.position)

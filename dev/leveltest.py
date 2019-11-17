@@ -33,6 +33,12 @@ def gameloop(func):
     return wrapper
 
 
+#class GameOverWindow(object):
+
+#    def __init__(self, screenX, screenY, score, win=False):
+#        self.screen = pygame.display.get_surface()
+#        self.clock = pygame.time.Clock()
+
 
 class GameWindow(object):
 
@@ -64,6 +70,7 @@ class GameWindow(object):
 
         self.font = pygame.font.SysFont("Arial Black", 16)
         self.score = 0
+        self.alive = True
 
     def _setupSpace(self):
         self.space = pymunk.Space()
@@ -131,7 +138,7 @@ class GameWindow(object):
             damage = impulse / 10000
             for shape in arbiter.shapes:
                 if shape.collision_type == 5:
-                    shape.body.entity_ref.takeDamage(damage)
+                    self.alive = shape.body.entity_ref.takeDamage(damage)
                 elif shape.collision_type == 2:
                     try:
                         self.entities.remove(shape.body.entity_ref)
@@ -145,12 +152,14 @@ class GameWindow(object):
             for shape in arbiter.shapes:
                 if shape.collision_type == 5:
                     print("You touched an enemy and died!")
+                    self.alive = False
             return False
 
         def blockDamageCharacter(arbiter, space, data):
             for shape in arbiter.shapes:
                 if shape.collision_type == 5:
                     print("You touched a block and died!")
+                    self.alive = False
             return False
 
         def floorDamageEnemy(arbiter, space, data):
@@ -218,7 +227,6 @@ class GameWindow(object):
     @gameloop
     def gameLoop(self):
         self.dt = self.clock.tick(FRAMERATE) / 1000
-        self.space.step(1/(2*FRAMERATE))
         self._handleEvents()
         self._executeLogic()
         self._drawObjects()
@@ -228,14 +236,25 @@ class GameWindow(object):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            for entity in self.entities:
-                entity.handleEvent(event)
+            if event.type == pygame.KEYDOWN and self.alive is None and event.key == pygame.K_SPACE:
+                self.__init__(self.screenX, self.screenY)
+            if self.alive:
+                for entity in self.entities:
+                    entity.handleEvent(event)
+
 
     def _executeLogic(self):
-        for entity in self.entities:
-            entity.update(self.dt)
-        for entity in self.entities:
-            entity.sidescroll()
+        if not self.alive:
+            if self.alive is not None:
+                del self.space
+                del self.entities
+                self.alive = None
+        else:
+            self.space.step(1/(2*FRAMERATE))
+            for entity in self.entities:
+                entity.update(self.dt)
+            for entity in self.entities:
+                entity.sidescroll()
         for bg in self.bgs:
             bg.update()
 
@@ -245,23 +264,24 @@ class GameWindow(object):
         for bg in self.bgs:
             bg.draw()
         #self.space.debug_draw(self.options)
-        for entity in self.entities:
-            entity.draw()
+        if self.alive:
+            for entity in self.entities:
+                entity.draw()
 
-        floorRect = pygame.Rect(0, self.screen.get_height()-20, self.screen.get_width(), 20)
-        pygame.draw.rect(self.screen, (64,64,64), floorRect)
+            floorRect = pygame.Rect(0, self.screen.get_height()-20, self.screen.get_width(), 20)
+            pygame.draw.rect(self.screen, (64,64,64), floorRect)
 
-        healthText = self.font.render("Health: {0}".format(round(self.player.health)), True, (0,0,0))
-        healthTextRect = healthText.get_rect()
-        healthTextRect.left = 10 
-        healthTextRect.top = 10 
-        self.screen.blit(healthText, healthTextRect)
+            healthText = self.font.render("Health: {0}".format(round(self.player.health)), True, (0,0,0))
+            healthTextRect = healthText.get_rect()
+            healthTextRect.left = 10 
+            healthTextRect.top = 10 
+            self.screen.blit(healthText, healthTextRect)
 
-        scoreText = self.font.render("Score: {0}".format(self.score), True, (0,0,0))
-        scoreTextRect = healthText.get_rect()
-        scoreTextRect.left = 10 
-        scoreTextRect.top = 30 
-        self.screen.blit(scoreText, scoreTextRect)
+            scoreText = self.font.render("Score: {0}".format(self.score), True, (0,0,0))
+            scoreTextRect = healthText.get_rect()
+            scoreTextRect.left = 10 
+            scoreTextRect.top = 30 
+            self.screen.blit(scoreText, scoreTextRect)
 
         pygame.display.flip()
 
