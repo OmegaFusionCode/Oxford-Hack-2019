@@ -11,7 +11,7 @@ from pymunk.pygame_util import DrawOptions
 pygame.mixer.pre_init(22050, -16, 2, 512)
 pygame.mixer.init()
 pygame.init()
-pygame.display.set_mode((1920, 1080),pygame.FULLSCREEN)
+pygame.display.set_mode((1920, 1080))
 
 
 from gameobjects import TargetLine, Character, Projectile, Floor
@@ -273,14 +273,14 @@ class GameWindow(object):
 
             healthText = self.font.render("Health: {0}".format(round(self.player.health)), True, (0,0,0))
             healthTextRect = healthText.get_rect()
-            healthTextRect.left = 10 
-            healthTextRect.top = 10 
+            healthTextRect.left = 10
+            healthTextRect.top = 10
             self.screen.blit(healthText, healthTextRect)
 
             scoreText = self.font.render("Score: {0}".format(self.score), True, (0,0,0))
             scoreTextRect = healthText.get_rect()
-            scoreTextRect.left = 10 
-            scoreTextRect.top = 30 
+            scoreTextRect.left = 10
+            scoreTextRect.top = 30
             self.screen.blit(scoreText, scoreTextRect)
 
         pygame.display.flip()

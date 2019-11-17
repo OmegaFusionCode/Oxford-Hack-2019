@@ -1,4 +1,4 @@
-import pygame,functions
+import pygame,functions,os
 
 class Explosion:
     def __init__(self, screen, pos):
@@ -6,11 +6,13 @@ class Explosion:
         self.index = 0
         self.screen = screen
 
-    def draw(self):
-        self.screen.blit(expSheet[int(self.index)], (200,200))
+    def update(self,dt):
         self.index+=0.25
         if self.index==9:
             self.remove()
+
+    def draw(self):
+        self.screen.blit(expSheet[int(self.index)], (200,200))
 
     def sidescroll(self):
         pass
