@@ -68,19 +68,6 @@ class GameWindow(object):
         self.entities.append(player)
         self.entities.append(Floor(self.screen, self.space, self.entities, 0, 2*self.screen.get_width()))
 
-        # Make the level parts
-
-        LevelMaker(self.screen, self.space, self.entities).makeLevels(INITIAL_X, player)
-        #self.entities.append(Block(self.screen, self.space, self.entities, (900, 120), 200, 120, glass))
-        #floor = Floor(self.screen, self.space, self.entities, 200, 200)
-
-        #self.floor = pymunk.Segment(self.space.static_body, (0, 5), (self.screenX, 5), 10)
-        #self.floor.body.position = 0, 5
-        #self.floor.elasticity = 0.2
-        #self.floor.friction = 0.2
-
-        #self.space.add(self.floor)
-
     def _setupCollisionHandlers(self):
 
         def projectile_post_solve(arbiter, space, data):

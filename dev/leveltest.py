@@ -11,7 +11,7 @@ from pymunk.pygame_util import DrawOptions
 pygame.mixer.pre_init(22050, -16, 2, 512)
 pygame.mixer.init()
 pygame.init()
-pygame.display.set_mode((1800, 900))
+pygame.display.set_mode((1920, 1080),pygame.FULLSCREEN)
 
 
 from gameobjects import TargetLine, Character, Projectile, Floor
@@ -209,7 +209,7 @@ class GameWindow(object):
 
     def _backgroundSetup(self):
         self.bg1 = pygame.image.load(os.path.join(os.path.dirname(os.path.realpath(__file__)), "background/bg.png")).convert_alpha()
-        self.bgs = [BackgroundLayer(self.screen, "bg_mountains.png", 0.25, self.screen.get_size()[1]-800),
+        self.bgs = [BackgroundLayer(self.screen, "bg_mountains.png", 0.25, self.screen.get_size()[1]-900),
                     BackgroundLayer(self.screen, "bg_hills.png", 0.75, self.screen.get_size()[1]-500),
                     BackgroundLayer(self.screen, "bg_foreground.png", 1.5, self.screen.get_size()[1]-299)]
 

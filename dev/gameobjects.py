@@ -41,7 +41,7 @@ class Entity(object):
             pass
 
     def sidescroll(self):
-        self.body.position = (self.body.position[0]-6, self.body.position[1])
+        self.body.position = (self.body.position[0]-2, self.body.position[1])
 
 
 class Character(Entity):
