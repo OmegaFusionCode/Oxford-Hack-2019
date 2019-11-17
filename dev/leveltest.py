@@ -129,7 +129,9 @@ class GameWindow(object):
             return False
 
         def floorDamageEnemy(arbiter, space, data):
-            impulse = functions.magnitude(arbiter.total_impulse)
+            for shape in arbiter.shapes:
+                if shape.collision_type == 2:
+                    impulse = functions.magnitude(shape.body.velocity) * shape.body.mass
             damage = impulse / 10000
             for shape in arbiter.shapes:
                 if shape.collision_type == 4:
@@ -137,7 +139,9 @@ class GameWindow(object):
                         shape.body.entity_ref.takeDamage(damage)
 
         def floorDamageBlock(arbiter, space, data):
-            impulse = functions.magnitude(arbiter.total_impulse)
+            for shape in arbiter.shapes:
+                if shape.collision_type == 2:
+                    impulse = functions.magnitude(shape.body.velocity) * shape.body.mass
             damage = impulse / 10000
             for shape in arbiter.shapes:
                 if shape.collision_type == 3:
