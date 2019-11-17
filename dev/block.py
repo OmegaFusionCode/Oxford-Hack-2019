@@ -18,3 +18,8 @@ class Block(Entity):
         self.shape.collision_type = 3
 
         self.space.add(self.body, self.shape)
+
+    def update(self, dt):
+        if self.body.position[1] < -200:
+            print("Block despawned")
+            self.remove()

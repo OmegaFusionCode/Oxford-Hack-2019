@@ -54,7 +54,7 @@ class GameWindow(object):
 
         player = Character(self.screen, self.space, self.entities, (100, 600))
         self.entities.append(player)
-        self.entities.append(Floor(self.screen, self.space, self.entities, 0, 5*self.screen.get_width()))
+        self.entities.append(Floor(self.screen, self.space, self.entities, -100, 5*self.screen.get_width()))
 
         # Make the level parts
 

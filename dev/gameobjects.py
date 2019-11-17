@@ -26,7 +26,10 @@ class Entity(object):
         pass
 
     def remove(self):
-        self.entities.remove(self)
+        try:
+            self.entities.remove(self)
+        except:
+            pass
         try:
             self.space.remove(self.body)
             self.space.remove(self.shape)

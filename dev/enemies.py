@@ -35,6 +35,11 @@ class Enemy(Entity):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_d:
                 self.takeDamage(35)
+    def update(self, dt):
+        if self.body.position[1] < -200:
+            print("Enemy Despawned")
+            self.die()
+
 class Enemy1(Enemy):
     def __init__(self, screen, space, entities, pos, player):
         mass = 1000
@@ -57,6 +62,7 @@ class Enemy1(Enemy):
         self.cooldown = random.uniform(1, 2.5)
 
     def update(self, dt):
+        super().update(dt)
         if self.alive:
             self.barrel.baseX, self.barrel.baseY = functions.convert((self.body.position[0], self.body.position[1]))
 
@@ -101,6 +107,7 @@ class Enemy2(Enemy):
         self.barrel = Barrel(self.screen, self.space, self.entities, self, 0, math.pi)
 
     def update(self, dt):
+        super().update(dt)
         if self.alive:
             self.barrel.baseX, self.barrel.baseY = functions.convert((self.body.position[0], self.body.position[1]))
 
