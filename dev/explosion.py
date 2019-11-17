@@ -1,7 +1,9 @@
 import pygame,functions,os
+from gameobjects import Entity
 
-class Explosion:
+class Explosion(Entity):
     def __init__(self, screen, pos):
+        super().__init__(screen, space, entities)
         self.pos = pos
         self.index = 0
         self.screen = screen
