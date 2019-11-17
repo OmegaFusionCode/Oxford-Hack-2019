@@ -132,7 +132,7 @@ class TargetLine(Entity):
         self.update(0)
 
     def createProjectile(self):
-        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX,self.endY), 2000, self.parent.body.velocity, self.currAngle, 10, True))
+        self.entities.append(Projectile(self.screen, self.space, self.entities, (self.endX,self.endY), 4000, self.parent.body.velocity, self.currAngle, 10, 125, True))
 
     #def handleEvent(self, event):
     #    if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
@@ -160,7 +160,7 @@ class TargetLine(Entity):
 
         if pygame.mouse.get_pressed()[0] and self.cooldown <= 0:
             self.createProjectile()
-            self.cooldown = 0.333
+            self.cooldown = 0.25
         self.cooldown -= dt
         self.endX = self.centreX + self.length*math.cos(self.currAngle+0.40489)
         self.endY = self.centreY + self.length*math.sin(self.currAngle+0.40489)
@@ -175,10 +175,10 @@ class TargetLine(Entity):
 
 class Projectile(Entity):
 
-    def __init__(self, screen, space, entities, pos, speed, parentVelocity, angle, radius, friendly = False):
-        mass = 200
+    def __init__(self, screen, space, entities, pos, speed, parentVelocity, angle, radius, mass, friendly = False):
+        self.mass = mass
         super().__init__(screen, space, entities)
-        self.body = pymunk.Body(mass, pymunk.moment_for_circle(mass, 0, radius))
+        self.body = pymunk.Body(self.mass, pymunk.moment_for_circle(self.mass, 0, radius))
         self.body.entity_ref = self
         self.body.position = functions.convert(pos)
         self.body.velocity = (speed*math.cos(angle), parentVelocity[1]-speed*math.sin(angle))
