@@ -1,11 +1,11 @@
-import pymunk
-
+import pymunk, pygame
+import functions
 from gameobjects import Entity
 
 
 class Block(Entity):
 
-    def __init__(self, screen, space, entities, pos, height, width, material):
+    def __init__(self, screen, space, entities, pos, height, width, material, angle=0):
         super().__init__(screen, space, entities)
         self.material = material
         self.height = height
@@ -13,11 +13,14 @@ class Block(Entity):
         self.mass = material.getMass(height * width)
         self.body = pymunk.Body(self.mass, pymunk.moment_for_box(self.mass, (width, height)))
         self.body.position = pos
+        self.body.angle = angle
         self.body.entity_ref = self
         self.shape = pymunk.Poly.create_box(self.body, (width, height))
         self.shape.friction = material.friction
         self.shape.collision_type = 3
         self.health = material.strength
+
+        self.texture = pygame.transform.scale(self.material.texture, (self.width, self.height))
 
         self.space.add(self.body, self.shape)
 
@@ -32,3 +35,6 @@ class Block(Entity):
         if self.health <= 0:
             print("Block died")
             self.remove()
+
+    def draw(self):
+        functions.rotate(self.screen, self.texture, self.body.position, (10, self.height//2), self.body.angle)
