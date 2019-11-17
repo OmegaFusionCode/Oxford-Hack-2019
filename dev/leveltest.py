@@ -96,7 +96,8 @@ class GameWindow(object):
             damage = impulse / 10000
             for shape in arbiter.shapes:
                 if shape.collision_type in (3, 4):
-                    shape.body.entity_ref.takeDamage(damage)
+                    if damage >= 5:
+                        shape.body.entity_ref.takeDamage(damage)
 
         def enemyProjectileDamageCharacter(arbiter, space, data):
             for shape in arbiter.shapes:
