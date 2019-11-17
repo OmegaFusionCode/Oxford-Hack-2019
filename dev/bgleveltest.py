@@ -132,8 +132,6 @@ class GameWindow(object):
         self.space.debug_draw(self.options)
         for entity in self.entities:
             entity.draw()
-        for bg in self.bgs:
-            bg.draw()
         pygame.display.flip()
 
     def run(self):
