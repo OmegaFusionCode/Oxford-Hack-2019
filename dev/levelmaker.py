@@ -19,19 +19,19 @@ class LevelMaker(object):
         currentX = initialX
         for func in self.levels:
             currentX += func(currentX, player)
-    
+
     def level1(self, initialX, player):
         floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
-        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal)
-        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+490, 120), 200, 20, metal)
+        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal())
+        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+490, 120), 200, 20, metal())
 
-        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+400, 230), 20, 200, metal)
+        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+400, 230), 20, 200, metal())
 
-        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+310, 340), 200, 20, metal)
-        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+490, 340), 200, 20, metal)
+        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+310, 340), 200, 20, metal())
+        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+490, 340), 200, 20, metal())
 
-        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+400, 450), 20, 200, metal)
+        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+400, 450), 20, 200, metal())
 
         enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 60), player)
         enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 500), player)
@@ -56,24 +56,24 @@ class LevelMaker(object):
     def level2(self, initialX, player):
         floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
-        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
-        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 120), 200, 20, metal)
-        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal)
-        blockBottom4 = Block(self.screen, self.space, self.entities, (initialX+490, 120), 200, 20, metal)
-        blockBottom5 = Block(self.screen, self.space, self.entities, (initialX+510, 120), 200, 20, metal)
-        blockBottom6 = Block(self.screen, self.space, self.entities, (initialX+690, 120), 200, 20, metal)
+        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal())
+        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 120), 200, 20, metal())
+        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal())
+        blockBottom4 = Block(self.screen, self.space, self.entities, (initialX+490, 120), 200, 20, metal())
+        blockBottom5 = Block(self.screen, self.space, self.entities, (initialX+510, 120), 200, 20, metal())
+        blockBottom6 = Block(self.screen, self.space, self.entities, (initialX+690, 120), 200, 20, metal())
 
-        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+200, 230), 20, 200, metal)
-        blockMiddle2 = Block(self.screen, self.space, self.entities, (initialX+400, 230), 20, 200, metal)
-        blockMiddle3 = Block(self.screen, self.space, self.entities, (initialX+600, 230), 20, 200, metal)
+        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+200, 230), 20, 200, metal())
+        blockMiddle2 = Block(self.screen, self.space, self.entities, (initialX+400, 230), 20, 200, metal())
+        blockMiddle3 = Block(self.screen, self.space, self.entities, (initialX+600, 230), 20, 200, metal())
 
-        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+110, 340), 200, 20, metal)
-        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+290, 340), 200, 20, metal)
-        blockUpper3 = Block(self.screen, self.space, self.entities, (initialX+510, 340), 200, 20, metal)
-        blockUpper4 = Block(self.screen, self.space, self.entities, (initialX+690, 340), 200, 20, metal)
+        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+110, 340), 200, 20, metal())
+        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+290, 340), 200, 20, metal())
+        blockUpper3 = Block(self.screen, self.space, self.entities, (initialX+510, 340), 200, 20, metal())
+        blockUpper4 = Block(self.screen, self.space, self.entities, (initialX+690, 340), 200, 20, metal())
 
-        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+200, 450), 20, 200, metal)
-        blockTop2 = Block(self.screen, self.space, self.entities, (initialX+600, 450), 20, 200, metal)
+        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+200, 450), 20, 200, metal())
+        blockTop2 = Block(self.screen, self.space, self.entities, (initialX+600, 450), 20, 200, metal())
 
         enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+200, 280), player)
         enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 60), player)
@@ -109,21 +109,21 @@ class LevelMaker(object):
     def level3(self, initialX, player):
         floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
-        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
-        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 120), 200, 20, metal)
-        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal)
-        blockBottom4 = Block(self.screen, self.space, self.entities, (initialX+490, 120), 200, 20, metal)
-        blockBottom5 = Block(self.screen, self.space, self.entities, (initialX+510, 120), 200, 20, metal)
-        blockBottom6 = Block(self.screen, self.space, self.entities, (initialX+690, 120), 200, 20, metal)
+        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal())
+        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 120), 200, 20, metal())
+        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal())
+        blockBottom4 = Block(self.screen, self.space, self.entities, (initialX+490, 120), 200, 20, metal())
+        blockBottom5 = Block(self.screen, self.space, self.entities, (initialX+510, 120), 200, 20, metal())
+        blockBottom6 = Block(self.screen, self.space, self.entities, (initialX+690, 120), 200, 20, metal())
 
-        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+200, 230), 20, 200, metal)
-        blockMiddle2 = Block(self.screen, self.space, self.entities, (initialX+400, 230), 20, 200, metal)
-        blockMiddle3 = Block(self.screen, self.space, self.entities, (initialX+600, 230), 20, 200, metal)
+        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+200, 230), 20, 200, metal())
+        blockMiddle2 = Block(self.screen, self.space, self.entities, (initialX+400, 230), 20, 200, metal())
+        blockMiddle3 = Block(self.screen, self.space, self.entities, (initialX+600, 230), 20, 200, metal())
 
-        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+310, 340), 200, 20, metal)
-        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+490, 340), 200, 20, metal)
+        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+310, 340), 200, 20, metal())
+        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+490, 340), 200, 20, metal())
 
-        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+400, 450), 20, 200, metal)
+        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+400, 450), 20, 200, metal())
 
         enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+200, 60), player)
         enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 60), player)
@@ -142,7 +142,7 @@ class LevelMaker(object):
         self.entities.append(blockMiddle1)
         self.entities.append(blockMiddle2)
         self.entities.append(blockMiddle3)
-                
+
         self.entities.append(blockUpper1)
         self.entities.append(blockUpper2)
 
@@ -154,22 +154,22 @@ class LevelMaker(object):
         self.entities.append(enemy4)
 
         return 900
-    
+
     def level4(self, initialX, player):
         floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
-        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 220), 400, 20, metal)
-        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 220), 400, 20, metal)
-        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+410, 120), 200, 20, metal)
-        blockBottom4 = Block(self.screen, self.space, self.entities, (initialX+590, 120), 200, 20, metal)
+        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 220), 400, 20, metal())
+        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 220), 400, 20, metal())
+        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+410, 120), 200, 20, metal())
+        blockBottom4 = Block(self.screen, self.space, self.entities, (initialX+590, 120), 200, 20, metal())
 
-        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+500, 230), 20, 200, metal)
+        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+500, 230), 20, 200, metal())
 
-        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+410, 340), 200, 20, metal)
-        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+590, 340), 200, 20, metal)
+        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+410, 340), 200, 20, metal())
+        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+590, 340), 200, 20, metal())
 
-        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+200, 430), 20, 200, metal)
-        blockTop2 = Block(self.screen, self.space, self.entities, (initialX+500, 450), 20, 200, metal)
+        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+200, 430), 20, 200, metal())
+        blockTop2 = Block(self.screen, self.space, self.entities, (initialX+500, 450), 20, 200, metal())
 
         enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+200, 480), player)
         enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+500, 60), player)
@@ -183,7 +183,7 @@ class LevelMaker(object):
         self.entities.append(blockBottom4)
 
         self.entities.append(blockMiddle1)
-                
+
         self.entities.append(blockUpper1)
         self.entities.append(blockUpper2)
 
@@ -199,18 +199,18 @@ class LevelMaker(object):
     def level5(self, initialX, player):
         floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
-        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
-        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal)
-        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+500, 120), 200, 20, metal)
-        blockBottom4 = Block(self.screen, self.space, self.entities, (initialX+690, 120), 200, 20, metal)
+        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal())
+        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal())
+        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+500, 120), 200, 20, metal())
+        blockBottom4 = Block(self.screen, self.space, self.entities, (initialX+690, 120), 200, 20, metal())
 
-        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+400, 230), 20, 600, metal)
+        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+400, 230), 20, 600, metal())
 
-        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+310, 340), 200, 20, metal)
-        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+500, 340), 200, 20, metal)
-        blockUpper3 = Block(self.screen, self.space, self.entities, (initialX+690, 340), 200, 20, metal)
+        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+310, 340), 200, 20, metal())
+        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+500, 340), 200, 20, metal())
+        blockUpper3 = Block(self.screen, self.space, self.entities, (initialX+690, 340), 200, 20, metal())
 
-        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+500, 450), 20, 400, metal)
+        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+500, 450), 20, 400, metal())
 
         enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+210, 60), player)
         enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+405, 280), player)
@@ -224,7 +224,7 @@ class LevelMaker(object):
         self.entities.append(blockBottom4)
 
         self.entities.append(blockMiddle1)
-                
+
         self.entities.append(blockUpper1)
         self.entities.append(blockUpper2)
         self.entities.append(blockUpper3)
@@ -236,15 +236,15 @@ class LevelMaker(object):
         self.entities.append(enemy3)
 
         return 900
-        
+
     def level6(self, initialX, player):
         floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
-        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
-        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+300, 120), 200, 20, metal)
-        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+490, 120), 200, 20, metal)
+        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal())
+        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+300, 120), 200, 20, metal())
+        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+490, 120), 200, 20, metal())
 
-        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+300, 230), 20, 400, metal)
+        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+300, 230), 20, 400, metal())
 
         enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+205, 60), player)
         enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+395, 60), player)
@@ -263,24 +263,24 @@ class LevelMaker(object):
         self.entities.append(enemy3)
 
         return 900
-        
+
     def level7(self, initialX, player):
         floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
-        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
-        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+690, 120), 200, 20, metal)
+        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal())
+        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+690, 120), 200, 20, metal())
 
-        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+400, 230), 20, 600, metal)
+        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+400, 230), 20, 600, metal())
 
-        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+210, 340), 200, 20, metal)
-        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+590, 340), 200, 20, metal)
+        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+210, 340), 200, 20, metal())
+        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+590, 340), 200, 20, metal())
 
-        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+400, 450), 20, 400, metal)
+        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+400, 450), 20, 400, metal())
 
-        blockSky1 = Block(self.screen, self.space, self.entities, (initialX+310, 560), 200, 20, metal)
-        blockSky2 = Block(self.screen, self.space, self.entities, (initialX+490, 560), 200, 20, metal)
+        blockSky1 = Block(self.screen, self.space, self.entities, (initialX+310, 560), 200, 20, metal())
+        blockSky2 = Block(self.screen, self.space, self.entities, (initialX+490, 560), 200, 20, metal())
 
-        blockHeaven1 = Block(self.screen, self.space, self.entities, (initialX+400, 690), 20, 200, metal)
+        blockHeaven1 = Block(self.screen, self.space, self.entities, (initialX+400, 690), 20, 200, metal())
 
         enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 60), player)
         enemy2 = Enemy2(self.screen, self.space, self.entities, (initialX+400, 280), player)
@@ -293,7 +293,7 @@ class LevelMaker(object):
         self.entities.append(blockBottom2)
 
         self.entities.append(blockMiddle1)
-                
+
         self.entities.append(blockUpper1)
         self.entities.append(blockUpper2)
 
@@ -310,31 +310,31 @@ class LevelMaker(object):
         self.entities.append(enemy4)
 
         return 900
-        
+
     def level8(self, initialX, player):
         floor = Floor(self.screen, self.space, self.entities, initialX, 1200)
 
-        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+90, 120), 200, 20, metal)
-        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+280, 120), 200, 20, metal)
-        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+470, 120), 200, 20, metal)
-        blockBottom4 = Block(self.screen, self.space, self.entities, (initialX+650, 120), 200, 20, metal)
-        blockBottom5 = Block(self.screen, self.space, self.entities, (initialX+840, 120), 200, 20, metal)
-        blockBottom6 = Block(self.screen, self.space, self.entities, (initialX+1030, 120), 200, 20, metal)
+        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+90, 120), 200, 20, metal())
+        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+280, 120), 200, 20, metal())
+        blockBottom3 = Block(self.screen, self.space, self.entities, (initialX+470, 120), 200, 20, metal())
+        blockBottom4 = Block(self.screen, self.space, self.entities, (initialX+650, 120), 200, 20, metal())
+        blockBottom5 = Block(self.screen, self.space, self.entities, (initialX+840, 120), 200, 20, metal())
+        blockBottom6 = Block(self.screen, self.space, self.entities, (initialX+1030, 120), 200, 20, metal())
 
-        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+280, 230), 20, 400, metal)
-        blockMiddle2 = Block(self.screen, self.space, self.entities, (initialX+840, 230), 20, 200, metal)
-        blockMiddle3 = Block(self.screen, self.space, self.entities, (initialX+560, 250), 20, 400, metal)
+        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+280, 230), 20, 400, metal())
+        blockMiddle2 = Block(self.screen, self.space, self.entities, (initialX+840, 230), 20, 200, metal())
+        blockMiddle3 = Block(self.screen, self.space, self.entities, (initialX+560, 250), 20, 400, metal())
 
-        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+110, 340), 200, 20, metal)
-        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+290, 340), 200, 20, metal)
-        blockUpper3 = Block(self.screen, self.space, self.entities, (initialX+830, 340), 200, 20, metal)
-        blockUpper4 = Block(self.screen, self.space, self.entities, (initialX+1010, 340), 200, 20, metal)
-        blockUpper5 = Block(self.screen, self.space, self.entities, (initialX+470, 360), 200, 20, metal)
-        blockUpper6 = Block(self.screen, self.space, self.entities, (initialX+650, 360), 200, 20, metal)
+        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+110, 340), 200, 20, metal())
+        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+290, 340), 200, 20, metal())
+        blockUpper3 = Block(self.screen, self.space, self.entities, (initialX+830, 340), 200, 20, metal())
+        blockUpper4 = Block(self.screen, self.space, self.entities, (initialX+1010, 340), 200, 20, metal())
+        blockUpper5 = Block(self.screen, self.space, self.entities, (initialX+470, 360), 200, 20, metal())
+        blockUpper6 = Block(self.screen, self.space, self.entities, (initialX+650, 360), 200, 20, metal())
 
-        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+200, 450), 20, 200, metal)
-        blockTop2 = Block(self.screen, self.space, self.entities, (initialX+920, 450), 20, 200, metal)
-        blockTop3 = Block(self.screen, self.space, self.entities, (initialX+560, 470), 20, 200, metal)
+        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+200, 450), 20, 200, metal())
+        blockTop2 = Block(self.screen, self.space, self.entities, (initialX+920, 450), 20, 200, metal())
+        blockTop3 = Block(self.screen, self.space, self.entities, (initialX+560, 470), 20, 200, metal())
 
         enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+200, 280), player)
         enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+920, 280), player)
@@ -353,7 +353,7 @@ class LevelMaker(object):
         self.entities.append(blockMiddle1)
         self.entities.append(blockMiddle2)
         self.entities.append(blockMiddle3)
-                
+
         self.entities.append(blockUpper1)
         self.entities.append(blockUpper2)
         self.entities.append(blockUpper3)
@@ -375,17 +375,17 @@ class LevelMaker(object):
     def level9(self, initialX, player):
         floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
-        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+250, 120), 200, 20, metal)
-        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+510, 120), 200, 20, metal)
+        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+250, 120), 200, 20, metal())
+        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+510, 120), 200, 20, metal())
 
-        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+380, 230), 20, 600, metal)
+        blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+380, 230), 20, 600, metal())
 
-        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+90, 340), 200, 20, metal)
-        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+280, 340), 200, 20, metal)
-        blockUpper3 = Block(self.screen, self.space, self.entities, (initialX+480, 340), 200, 20, metal)
-        blockUpper4 = Block(self.screen, self.space, self.entities, (initialX+670, 340), 200, 20, metal)
+        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+90, 340), 200, 20, metal())
+        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+280, 340), 200, 20, metal())
+        blockUpper3 = Block(self.screen, self.space, self.entities, (initialX+480, 340), 200, 20, metal())
+        blockUpper4 = Block(self.screen, self.space, self.entities, (initialX+670, 340), 200, 20, metal())
 
-        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+380, 450), 20, 600, metal)
+        blockTop1 = Block(self.screen, self.space, self.entities, (initialX+380, 450), 20, 600, metal())
 
         enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+200, 280), player)
         enemy2 = Enemy2(self.screen, self.space, self.entities, (initialX+380, 280), player)
