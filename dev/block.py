@@ -1,4 +1,4 @@
-import pymunk, pygame
+import pymunk, pygame, math
 import functions
 from gameobjects import Entity
 
@@ -37,4 +37,4 @@ class Block(Entity):
             self.remove()
 
     def draw(self):
-        functions.rotate(self.screen, self.texture, self.body.position, (10, self.height//2), self.body.angle)
+        functions.rotate(self.screen, self.texture, functions.convert(self.body.position), (9, self.height//2), math.degrees(self.body.angle))
