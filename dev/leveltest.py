@@ -2,6 +2,7 @@ import sys
 import time
 import math
 import random
+import os
 
 import pygame
 import pymunk
@@ -40,6 +41,8 @@ class GameWindow(object):
         self.dt = 0
 
     def _setupPygame(self, screenX, screenY, gameName):
+        pygame.mixer.pre_init(22050, -16, 2, 512)
+        pygame.mixer.init()
         pygame.init()
         pygame.display.set_mode((screenX, screenY))
         pygame.display.set_caption(gameName)
@@ -48,6 +51,14 @@ class GameWindow(object):
         self.screenY = screenY
         self.options = DrawOptions(self.screen)
         self.clock = pygame.time.Clock()
+
+        songs = ["sounds\music\drive_with_me_looped.wav","sounds\music\motivation_looped.wav"]
+
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        pygame.mixer.music.load(os.path.join(dir_path, random.choice(songs)))
+        pygame.mixer.music.play(-1,0.0)
+        pygame.mixer.music.set_volume(0.85)
+
 
     def _setupSpace(self):
         self.space = pymunk.Space()
@@ -96,7 +107,7 @@ class GameWindow(object):
             damage = impulse / 10000
             for shape in arbiter.shapes:
                 if shape.collision_type in (3, 4):
-                    if damage >= 5:
+                    if damage >= 15:
                         shape.body.entity_ref.takeDamage(damage)
 
         def enemyProjectileDamageCharacter(arbiter, space, data):

@@ -1,5 +1,6 @@
 import pymunk, pygame, math
 import functions
+import os
 from gameobjects import Entity
 
 
@@ -26,6 +27,21 @@ class Block(Entity):
 
     def takeDamage(self, damage):
         self.health = self.health - damage
+
+        soundString = ""
+        if self.material.matType == 0:
+            soundString = "metal_collision.wav"
+        elif self.material.matType == 1:
+            soundString = "stone_collision.wav"
+        elif self.material.matType == 2:
+            soundString = "glass_collision.wav"
+
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        ext_path = os.path.join(dir_path, "sounds/sound_effects")
+        hitSound = pygame.mixer.Sound(os.path.join(ext_path, soundString))
+        hitSound.set_volume(0.1)
+        pygame.mixer.Channel(1).play(hitSound)
+
         if self.health <= 0:
             self.remove()
 
