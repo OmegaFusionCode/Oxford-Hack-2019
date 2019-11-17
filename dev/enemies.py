@@ -1,5 +1,6 @@
 import math
 import os
+import random
 
 import pygame
 import pymunk
@@ -51,6 +52,8 @@ class Enemy1(Enemy):
 
         # Add the turret barrel as an attached entity
         self.barrel = Barrel(self.screen, self.space, self.entities, self, 0, math.pi)
+
+        self.cooldown = random.uniform(1, 2.5)
 
     def update(self, dt):
         if self.alive:
@@ -111,7 +114,7 @@ class Enemy2(Enemy):
 
             if self.barrel.cooldown <= 0:
                 self.barrel.createProjectile(1)
-                self.barrel.cooldown = 2.5
+                self.barrel.cooldown = 
             self.barrel.cooldown -= dt
         else:
             self.remove()
