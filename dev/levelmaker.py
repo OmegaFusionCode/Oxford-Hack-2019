@@ -21,7 +21,7 @@ class LevelMaker(object):
             currentX += func(currentX, player)
     
     def level1(self, initialX, player):
-        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+        floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
         blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal)
         blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+490, 120), 200, 20, metal)
@@ -51,10 +51,10 @@ class LevelMaker(object):
         self.entities.append(enemy1)
         self.entities.append(enemy2)
 
-        return 800
+        return 900
 
     def level2(self, initialX, player):
-        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+        floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
         blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
         blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 120), 200, 20, metal)
@@ -104,10 +104,10 @@ class LevelMaker(object):
         self.entities.append(enemy2)
         self.entities.append(enemy3)
 
-        return 800
+        return 900
 
     def level3(self, initialX, player):
-        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+        floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
         blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
         blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 120), 200, 20, metal)
@@ -153,10 +153,10 @@ class LevelMaker(object):
         self.entities.append(enemy3)
         self.entities.append(enemy4)
 
-        return 800
+        return 900
     
     def level4(self, initialX, player):
-        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+        floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
         blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 220), 400, 20, metal)
         blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+290, 220), 400, 20, metal)
@@ -194,10 +194,10 @@ class LevelMaker(object):
         self.entities.append(enemy2)
         self.entities.append(enemy3)
 
-        return 800
+        return 900
 
     def level5(self, initialX, player):
-        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+        floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
         blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
         blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal)
@@ -235,10 +235,10 @@ class LevelMaker(object):
         self.entities.append(enemy2)
         self.entities.append(enemy3)
 
-        return 800
+        return 900
         
     def level6(self, initialX, player):
-        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+        floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
         blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
         blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+300, 120), 200, 20, metal)
@@ -262,10 +262,10 @@ class LevelMaker(object):
         self.entities.append(enemy2)
         self.entities.append(enemy3)
 
-        return 800
+        return 900
         
     def level7(self, initialX, player):
-        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+        floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
         blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+110, 120), 200, 20, metal)
         blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+690, 120), 200, 20, metal)
@@ -309,7 +309,7 @@ class LevelMaker(object):
         self.entities.append(enemy3)
         self.entities.append(enemy4)
 
-        return 800
+        return 900
         
     def level8(self, initialX, player):
         floor = Floor(self.screen, self.space, self.entities, initialX, 1200)
@@ -373,7 +373,7 @@ class LevelMaker(object):
         return 1200
 
     def level9(self, initialX, player):
-        floor = Floor(self.screen, self.space, self.entities, initialX, 800)
+        floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
         blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+250, 120), 200, 20, metal)
         blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+510, 120), 200, 20, metal)
@@ -409,4 +409,4 @@ class LevelMaker(object):
         self.entities.append(enemy2)
         self.entities.append(enemy3)
 
-        return 800
+        return 900
