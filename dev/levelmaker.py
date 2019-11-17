@@ -34,6 +34,8 @@ class LevelMaker(object):
         blockTop1 = Block(self.screen, self.space, self.entities, (initialX+400, 450), 20, 200, metal)
 
         enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 60), player)
+        enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 280), player)
+        enemy3 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 500), player)
 
         self.entities.append(floor)
 
@@ -48,6 +50,8 @@ class LevelMaker(object):
         self.entities.append(blockTop1)
 
         self.entities.append(enemy1)
+        self.entities.append(enemy2)
+        self.entities.append(enemy3)
 
         return 800
 
@@ -73,6 +77,10 @@ class LevelMaker(object):
         blockTop1 = Block(self.screen, self.space, self.entities, (initialX+200, 450), 20, 200, metal)
         blockTop2 = Block(self.screen, self.space, self.entities, (initialX+600, 450), 20, 200, metal)
 
+        enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+200, 280), player)
+        enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 60), player)
+        enemy3 = Enemy1(self.screen, self.space, self.entities, (initialX+600, 280), player)
+
         self.entities.append(floor)
 
         self.entities.append(blockBottom1)
@@ -93,6 +101,10 @@ class LevelMaker(object):
 
         self.entities.append(blockTop1)
         self.entities.append(blockTop2)
+
+        self.entities.append(enemy1)
+        self.entities.append(enemy2)
+        self.entities.append(enemy3)
 
         return 800
 
@@ -115,6 +127,11 @@ class LevelMaker(object):
 
         blockTop1 = Block(self.screen, self.space, self.entities, (initialX+400, 450), 20, 200, metal)
 
+        enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+200, 60), player)
+        enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 60), player)
+        enemy3 = Enemy1(self.screen, self.space, self.entities, (initialX+400, 280), player)
+        enemy4 = Enemy1(self.screen, self.space, self.entities, (initialX+600, 60), player)
+
         self.entities.append(floor)
 
         self.entities.append(blockBottom1)
@@ -132,6 +149,11 @@ class LevelMaker(object):
         self.entities.append(blockUpper2)
 
         self.entities.append(blockTop1)
+
+        self.entities.append(enemy1)
+        self.entities.append(enemy2)
+        self.entities.append(enemy3)
+        self.entities.append(enemy4)
 
         return 800
     
@@ -151,6 +173,10 @@ class LevelMaker(object):
         blockTop1 = Block(self.screen, self.space, self.entities, (initialX+200, 430), 20, 200, metal)
         blockTop2 = Block(self.screen, self.space, self.entities, (initialX+500, 450), 20, 200, metal)
 
+        enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+200, 480), player)
+        enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+500, 60), player)
+        enemy3 = Enemy1(self.screen, self.space, self.entities, (initialX+500, 500), player)
+
         self.entities.append(floor)
 
         self.entities.append(blockBottom1)
@@ -165,6 +191,10 @@ class LevelMaker(object):
 
         self.entities.append(blockTop1)
         self.entities.append(blockTop2)
+
+        self.entities.append(enemy1)
+        self.entities.append(enemy2)
+        self.entities.append(enemy3)
 
         return 800
 
@@ -184,6 +214,10 @@ class LevelMaker(object):
 
         blockTop1 = Block(self.screen, self.space, self.entities, (initialX+470, 450), 20, 380, metal)
 
+        enemy1 = Enemy1(self.screen, self.space, self.entities, (initialX+200, 60), player)
+        enemy2 = Enemy1(self.screen, self.space, self.entities, (initialX+380, 280), player)
+        enemy3 = Enemy1(self.screen, self.space, self.entities, (initialX+560, 60), player)
+
         self.entities.append(floor)
 
         self.entities.append(blockBottom1)
@@ -198,6 +232,9 @@ class LevelMaker(object):
         self.entities.append(blockUpper3)
 
         self.entities.append(blockTop1)
+        self.entities.append(enemy1)
+        self.entities.append(enemy2)
+        self.entities.append(enemy3)
 
         return 800
         
