@@ -180,7 +180,7 @@ class LevelMaker(object):
 
         blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+290, 340), 200, 20, metal)
         blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+470, 340), 200, 20, metal)
-        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+650, 340), 200, 20, metal)
+        blockUpper3 = Block(self.screen, self.space, self.entities, (initialX+650, 340), 200, 20, metal)
 
         blockTop1 = Block(self.screen, self.space, self.entities, (initialX+470, 450), 20, 380, metal)
 
