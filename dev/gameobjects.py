@@ -32,6 +32,9 @@ class Entity(object):
             self.space.remove(self.shape)
         except:
             pass
+    
+    def sidescroll(self):
+        self.body.position = (self.body.position[0]-1, self.body.position)
 
 
 class Character(Entity):
@@ -140,6 +143,9 @@ class TargetLine(Entity):
         self.endX = self.centreX + self.length*math.cos(self.currAngle+0.40489)
         self.endY = self.centreY + self.length*math.sin(self.currAngle+0.40489)
 
+    def sidescroll(self):
+        pass
+
     """
     def draw(self):
         pygame.draw.line(self.screen, (255,255,255), (self.centreX, self.centreY), (self.endX, self.endY))
@@ -192,3 +198,6 @@ class Floor(Entity):
         self.body.entity_ref = self
         self.body.position = (startX, 5)
         self.space.add(self.shape)
+
+    def sidescroll():
+        pass
