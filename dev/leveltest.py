@@ -31,6 +31,7 @@ class GameWindow(object):
         self._setupGeneral()
         self._setupPygame(screenX, screenY, gameName)
         self._setupSpace()
+        self._setupCollisionHandlers()
 
     def _setupGeneral(self):
         self.entities = []
@@ -57,7 +58,7 @@ class GameWindow(object):
         # Make the level parts
 
         LevelMaker(self.screen, self.space, self.entities).makeLevels(INITIAL_X)
-        #box = Block(self.screen, self.space, self.entities, (300, 120), 200, 20, metal)
+        #self.entities.append(Block(self.screen, self.space, self.entities, (900, 120), 200, 120, glass))
         #floor = Floor(self.screen, self.space, self.entities, 200, 200)
 
         #self.floor = pymunk.Segment(self.space.static_body, (0, 5), (self.screenX, 5), 10)
@@ -66,6 +67,22 @@ class GameWindow(object):
         #self.floor.friction = 0.2
 
         #self.space.add(self.floor)
+
+    def _setupCollisionHandlers(self):
+
+        def projectile_post_solve(arbiter, space, data):
+            for shape in arbiter.shapes:
+                if shape.collision_type == 1:
+                    try:
+                        self.entities.remove(shape.body.entity_ref)
+                    except ValueError:
+                        print("Exception Handled. list.remove(x): x not in list")
+                        pass
+                    self.space.remove(shape.body, shape)
+
+        self.projectileCollisionHandler = self.space.add_wildcard_collision_handler(1)
+        self.projectileCollisionHandler.post_solve = projectile_post_solve
+
 
     @gameloop
     def gameLoop(self):
@@ -86,6 +103,8 @@ class GameWindow(object):
     def _executeLogic(self):
         for entity in self.entities:
             entity.update(self.dt)
+        for entity in self.entities:
+            entity.sidescroll()
 
     def _drawObjects(self):
         self.screen.fill((0,0,0))
