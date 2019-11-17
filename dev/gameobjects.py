@@ -35,7 +35,7 @@ class Entity(object):
             self.space.remove(self.shape)
         except:
             pass
-    
+
     def sidescroll(self):
         self.body.position = (self.body.position[0]-2, self.body.position[1])
 
@@ -99,7 +99,7 @@ class Character(Entity):
         else:
             self.thrusting = False
             self.body.apply_force_at_local_point(Vec2d(0,-5000), self.body.center_of_gravity)
-        
+
         if self.body.velocity[1] > self.maxVel:
             self.body.velocity = (self.body.velocity[0], self.maxVel)
         elif self.body.velocity[1] < self.minVel:
@@ -110,7 +110,7 @@ class Character(Entity):
         if self.health <= 0:
             print("You were killed!")
         else:
-            print(f"Your health was reduced to {round(self.health)}!")
+            print("Your health was reduced to",round(self.health))
 
     def draw(self):
         x,y = functions.convert(self.body.position)
@@ -191,7 +191,7 @@ class Projectile(Entity):
         self.body.velocity = (speed*math.cos(angle), parentVelocity[1]-speed*math.sin(angle))
 
         self.shape = pymunk.Circle(self.body, radius)
-        
+
         if friendly:
             self.shape.collision_type = 1
         else:
