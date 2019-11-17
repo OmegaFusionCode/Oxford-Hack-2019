@@ -12,6 +12,7 @@ from gameobjects import TargetLine, Character, Projectile, Floor
 from materials import Material, metal, stone, glass
 from block import Block
 from levelmaker import LevelMaker
+from parallax import BackgroundLayer
 import functions
 
 
@@ -34,6 +35,7 @@ class GameWindow(object):
         self._setupPygame(screenX, screenY, gameName)
         self._setupSpace()
         self._setupCollisionHandlers()
+        self._backgroundSetup()
 
     def _setupGeneral(self):
         self.entities = []
@@ -167,7 +169,7 @@ class GameWindow(object):
 
         self.projectileIgnoreEnemyProjectile_handler = self.space.add_collision_handler(1,2)
         self.projectileIgnoreEnemyProjectile_handler.begin = projectileIgnoreEnemyProjectile
-        
+
         self.enemyProjectileIgnoreEnemy_hander = self.space.add_collision_handler(2,4)
         self.enemyProjectileIgnoreEnemy_hander.begin = enemyProjectileIgnoreEnemy
 
@@ -195,6 +197,12 @@ class GameWindow(object):
         self.floorDamageBlock_handler = self.space.add_collision_handler(3,6)
         self.floorDamageBlock_handler.pre_solve = floorDamageBlock
 
+    def _backgroundSetup(self):
+        self.bg1 = pygame.image.load(os.path.join(os.path.dirname(os.path.realpath(__file__)), "background/bg.png")).convert_alpha()
+        self.bgs = [BackgroundLayer(self.screen, "bg_mountains.png", 0.25, self.screen.get_size()[1]-800),
+                    BackgroundLayer(self.screen, "bg_hills.png", 0.75, self.screen.get_size()[1]-500),
+                    BackgroundLayer(self.screen, "bg_foreground.png", 1.5, self.screen.get_size()[1]-299)]
+
     @gameloop
     def gameLoop(self):
         self.dt = self.clock.tick(FRAMERATE) / 1000
@@ -216,10 +224,14 @@ class GameWindow(object):
             entity.update(self.dt)
         for entity in self.entities:
             entity.sidescroll()
+        for bg in self.bgs:
+            bg.update()
 
     def _drawObjects(self):
         pygame.display.set_caption("FPS: " + str(self.clock.get_fps()))
-        self.screen.fill((0,0,0))
+        self.screen.blit(self.bg1, (0,0))
+        for bg in self.bgs:
+            bg.draw()
         self.space.debug_draw(self.options)
         for entity in self.entities:
             entity.draw()
