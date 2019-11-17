@@ -26,6 +26,10 @@ class Block(Entity):
 
     def takeDamage(self, damage):
         self.health = self.health - damage
+        soundString = ""
+        if self.material.matType = 0:
+            soundString = 
+
         if self.health <= 0:
             self.remove()
 
