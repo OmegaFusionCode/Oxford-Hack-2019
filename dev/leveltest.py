@@ -52,12 +52,13 @@ class GameWindow(object):
         self.space = pymunk.Space()
         self.space.gravity = 0, -1000
 
-        self.entities.append(Character(self.screen, self.space, self.entities, (100, 600)))
+        player = Character(self.screen, self.space, self.entities, (100, 600))
+        self.entities.append(player)
         self.entities.append(Floor(self.screen, self.space, self.entities, 0, 2*self.screen.get_width()))
 
         # Make the level parts
 
-        LevelMaker(self.screen, self.space, self.entities).makeLevels(INITIAL_X)
+        LevelMaker(self.screen, self.space, self.entities).makeLevels(INITIAL_X, player)
         #self.entities.append(Block(self.screen, self.space, self.entities, (900, 120), 200, 120, glass))
         #floor = Floor(self.screen, self.space, self.entities, 200, 200)
 
@@ -79,6 +80,12 @@ class GameWindow(object):
                         print("Exception Handled. list.remove(x): x not in list")
                         pass
                     self.space.remove(shape.body, shape)
+
+        def enemy_projectile_begin(arbiter, space, data):
+            return False
+            
+        self.enemyProjectileCollisionHandler = self.space.add_collision_handler(2,3)
+        self.enemyProjectileCollisionHandler.begin = enemy_projectile_begin
 
         self.projectileCollisionHandler = self.space.add_wildcard_collision_handler(1)
         self.projectileCollisionHandler.post_solve = projectile_post_solve

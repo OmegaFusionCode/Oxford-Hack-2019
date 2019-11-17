@@ -15,5 +15,6 @@ class Block(Entity):
         self.body.position = pos
         self.shape = pymunk.Poly.create_box(self.body, (width, height))
         self.shape.friction = material.friction
+        self.shape.collision_type = 3
 
         self.space.add(self.body, self.shape)
