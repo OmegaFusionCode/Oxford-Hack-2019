@@ -107,7 +107,8 @@ class GameWindow(object):
             damage = impulse / 10000
             for shape in arbiter.shapes:
                 if shape.collision_type in (3, 4):
-                    shape.body.entity_ref.takeDamage(damage)
+                    if damage >= 5:
+                        shape.body.entity_ref.takeDamage(damage)
 
         def enemyProjectileDamageCharacter(arbiter, space, data):
             for shape in arbiter.shapes:
@@ -138,6 +139,22 @@ class GameWindow(object):
                     print("You touched a block and died!")
             return False
 
+        def floorDamageEnemy(arbiter, space, data):
+            impulse = functions.magnitude(arbiter.total_impulse)
+            damage = impulse / 10000
+            for shape in arbiter.shapes:
+                if shape.collision_type == 4:
+                    if damage >= 5:
+                        shape.body.entity_ref.takeDamage(damage)
+
+        def floorDamageBlock(arbiter, space, data):
+            impulse = functions.magnitude(arbiter.total_impulse)
+            damage = impulse / 10000
+            for shape in arbiter.shapes:
+                if shape.collision_type == 3:
+                    if damage >= 5:
+                        shape.body.entity_ref.takeDamage(damage)
+
         self.enemyProjectileIgnoreBlocks_handler = self.space.add_collision_handler(2,3)
         self.enemyProjectileIgnoreBlocks_handler.begin = enemyProjectileIgnoreBlocks
 
@@ -167,6 +184,12 @@ class GameWindow(object):
 
         self.blockDamageCharacter_handler = self.space.add_collision_handler(3,5)
         self.blockDamageCharacter_handler.pre_solve = blockDamageCharacter
+
+        self.floorDamageEnemy_handler = self.space.add_collision_handler(4,6)
+        self.floorDamageEnemy_handler.pre_solve = floorDamageEnemy
+
+        self.floorDamageBlock_handler = self.space.add_collision_handler(3,6)
+        self.floorDamageBlock_handler.pre_solve = floorDamageBlock
 
     @gameloop
     def gameLoop(self):
