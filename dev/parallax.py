@@ -1,9 +1,8 @@
 import pygame,sys,os
 
 class BackgroundLayer:
-    def __init__(self, screen, image, speed, height):
+    def __init__(self, screen, image, speed):
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        self.height = height
         self.screen = screen
         self.image = pygame.image.load(os.path.join(dir_path, "background\\"+image)).convert_alpha()
         #self.image = pygame.transform.scale(self.image, (1800,900))
@@ -18,5 +17,5 @@ class BackgroundLayer:
             self.pos = [self.pos[0], 1800]
 
     def draw(self):
-        self.screen.blit(self.image, (self.pos[0], self.height))
-        self.screen.blit(self.image, (self.pos[1], self.height))
+        self.screen.blit(self.image, (self.pos[0], 0))
+        self.screen.blit(self.image, (self.pos[1], 0))

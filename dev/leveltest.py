@@ -14,7 +14,7 @@ from levelmaker import LevelMaker
 
 
 FRAMERATE = 60
-INITIAL_X = 400
+INITIAL_X = 1800
 
 
 def gameloop(func):
@@ -54,7 +54,7 @@ class GameWindow(object):
 
         player = Character(self.screen, self.space, self.entities, (100, 600))
         self.entities.append(player)
-        self.entities.append(Floor(self.screen, self.space, self.entities, 0, 2*self.screen.get_width()))
+        self.entities.append(Floor(self.screen, self.space, self.entities, 0, 5*self.screen.get_width()))
 
         # Make the level parts
 
@@ -87,6 +87,9 @@ class GameWindow(object):
         def projectileIgnoreEnemyProjectile(arbiter, space, data):
             return False
 
+        def enemyProjectileIgnoreEnemy(arbiter, space, data):
+            return False
+
         self.enemyProjectileIgnoreBlocks_handler = self.space.add_collision_handler(2,3)
         self.enemyProjectileIgnoreBlocks_handler.begin = enemyProjectileIgnoreBlocks
 
@@ -95,7 +98,9 @@ class GameWindow(object):
 
         self.projectileIgnoreEnemyProjectile_handler = self.space.add_collision_handler(1,2)
         self.projectileIgnoreEnemyProjectile_handler.begin = projectileIgnoreEnemyProjectile
-
+        
+        self.enemyProjectileIgnoreEnemy_hander = self.space.add_collision_handler(2,4)
+        self.enemyProjectileIgnoreEnemy_hander.begin = enemyProjectileIgnoreEnemy
 
     @gameloop
     def gameLoop(self):
