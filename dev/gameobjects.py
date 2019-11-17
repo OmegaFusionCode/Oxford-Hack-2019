@@ -114,17 +114,29 @@ class TargetLine(Entity):
     #        self.createProjectile()
 
     def update(self, dt):
-        if pygame.key.get_pressed()[pygame.K_s]:
-            if self.currAngle < self.maxAngle:
-                self.currAngle += math.pi / 48
-        if pygame.key.get_pressed()[pygame.K_w]:
-            if self.currAngle > self.minAngle:
-                self.currAngle -= math.pi / 48
+        #if pygame.key.get_pressed()[pygame.K_s]:
+        #    if self.currAngle < self.maxAngle:
+        #        self.currAngle += math.pi / 48
+        #if pygame.key.get_pressed()[pygame.K_w]:
+        #    if self.currAngle > self.minAngle:
+        #        self.currAngle -= math.pi / 48
+        self.centreX, self.centreY = functions.convert((self.parent.body.position[0]-4,self.parent.body.position[1]+24))
+        mouseX, mouseY = pygame.mouse.get_pos()
+        try:
+            angle = math.atan((mouseY-self.centreY) / (mouseX-self.centreX))
+            if angle >= self.minAngle and angle <= self.maxAngle:
+                self.currAngle = angle
+            elif angle < self.minAngle:
+                self.currAngle = self.minAngle
+            else:
+                self.currAngle = self.maxAngle
+        except:
+            angle = math.pi/2
+
         if pygame.mouse.get_pressed()[0] and self.cooldown <= 0:
             self.createProjectile()
             self.cooldown = 1
         self.cooldown -= dt
-        self.centreX, self.centreY = functions.convert((self.parent.body.position[0]-4,self.parent.body.position[1]+24))
         self.endX = self.centreX + self.length*math.cos(self.currAngle+0.40489)
         self.endY = self.centreY + self.length*math.sin(self.currAngle+0.40489)
 
