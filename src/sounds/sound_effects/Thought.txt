@@ -1,0 +1,23 @@
+materials:
+
+Dirt
+Glass
+Stone
+Metal
+Normal Gun
+Jetpack
+
+Dirt Glass - Dirt Noise
+Dirt Stone - Dirt dud
+Dirt Metal - Dirt dud
+Dirt bullet - no noise?
+Glass Stone - Glass + small stone
+Glass Metal - Glass + Metal
+Glass Gun - Glass
+Stone Metal - Stone + Metal
+Stone Gun - Stone dud
+Metal Gun - Metal
+
+Glass sound higher
+rock sound heavy and break
+Metal Heavy Collision Too high
