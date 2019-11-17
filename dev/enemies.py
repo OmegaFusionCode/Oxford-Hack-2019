@@ -4,7 +4,7 @@ import random
 
 import pygame
 import pymunk
-import functions
+import functions, explosion
 
 from pymunk.vec2d import Vec2d
 
@@ -37,6 +37,7 @@ class Enemy(Entity):
             return 500
         return 0
     def die(self):
+        self.entities.append(explosion.Explosion(self.screen, self.body.position))
         self.alive = False
         self.remove()
     def handleEvent(self, event):
