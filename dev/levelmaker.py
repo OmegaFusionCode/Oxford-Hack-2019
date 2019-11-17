@@ -13,7 +13,7 @@ class LevelMaker(object):
         self.space = space
         self.entities = entities
         self.levels = [self.level1, self.level2, self.level3, self.level4, self.level5, self.level6, self.level7, self.level9]
-        #random.shuffle(self.levels)
+        random.shuffle(self.levels)
 
     def makeLevels(self, initialX, player):
         currentX = initialX
