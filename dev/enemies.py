@@ -1,5 +1,6 @@
 import math
 import os
+import random
 
 import pygame
 import pymunk
@@ -17,6 +18,7 @@ class Enemy(Entity):
         self.body.position = pos
         self.x = pos[0]
         self.shape = shape
+        self.shape.collision_type = 4
         self.shape.body = self.body
         self.space.add(self.body, self.shape)
         self.health = health
@@ -51,6 +53,8 @@ class Enemy1(Enemy):
 
         # Add the turret barrel as an attached entity
         self.barrel = Barrel(self.screen, self.space, self.entities, self, 0, math.pi)
+
+        self.cooldown = random.uniform(1, 2.5)
 
     def update(self, dt):
         if self.alive:
@@ -108,7 +112,6 @@ class Enemy2(Enemy):
             self.barrel.delta_x = characterPos[0] - self.barrel.baseX
             self.barrel.delta_y = characterPos[1] - self.barrel.baseY
             self.barrel.currAngle = math.pi-(math.atan2(self.barrel.delta_y, self.barrel.delta_x) + (10*(math.pi/180)))
-
 
             if self.barrel.cooldown <= 0:
                 self.barrel.createProjectile(1)

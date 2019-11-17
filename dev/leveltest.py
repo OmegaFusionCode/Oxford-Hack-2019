@@ -14,7 +14,7 @@ from levelmaker import LevelMaker
 
 
 FRAMERATE = 60
-INITIAL_X = 400
+INITIAL_X = 1800
 
 
 def gameloop(func):
@@ -54,7 +54,7 @@ class GameWindow(object):
 
         player = Character(self.screen, self.space, self.entities, (100, 600))
         self.entities.append(player)
-        self.entities.append(Floor(self.screen, self.space, self.entities, 0, 2*self.screen.get_width()))
+        self.entities.append(Floor(self.screen, self.space, self.entities, 0, 5*self.screen.get_width()))
 
         # Make the level parts
 
@@ -71,7 +71,7 @@ class GameWindow(object):
 
     def _setupCollisionHandlers(self):
 
-        def projectile_post_solve(arbiter, space, data):
+        def projectileDestroyOnImpact(arbiter, space, data):
             for shape in arbiter.shapes:
                 if shape.collision_type == 1:
                     try:
@@ -81,15 +81,26 @@ class GameWindow(object):
                         pass
                     self.space.remove(shape.body, shape)
 
-        def enemy_projectile_begin(arbiter, space, data):
+        def enemyProjectileIgnoreBlocks(arbiter, space, data):
             return False
 
-        self.enemyProjectileCollisionHandler = self.space.add_collision_handler(2,3)
-        self.enemyProjectileCollisionHandler.begin = enemy_projectile_begin
+        def projectileIgnoreEnemyProjectile(arbiter, space, data):
+            return False
 
-        self.projectileCollisionHandler = self.space.add_wildcard_collision_handler(1)
-        self.projectileCollisionHandler.post_solve = projectile_post_solve
+        def enemyProjectileIgnoreEnemy(arbiter, space, data):
+            return False
 
+        self.enemyProjectileIgnoreBlocks_handler = self.space.add_collision_handler(2,3)
+        self.enemyProjectileIgnoreBlocks_handler.begin = enemyProjectileIgnoreBlocks
+
+        self.projectileDestroyOnImpact_handler = self.space.add_wildcard_collision_handler(1)
+        self.projectileDestroyOnImpact_handler.post_solve = projectileDestroyOnImpact
+
+        self.projectileIgnoreEnemyProjectile_handler = self.space.add_collision_handler(1,2)
+        self.projectileIgnoreEnemyProjectile_handler.begin = projectileIgnoreEnemyProjectile
+        
+        self.enemyProjectileIgnoreEnemy_hander = self.space.add_collision_handler(2,4)
+        self.enemyProjectileIgnoreEnemy_hander.begin = enemyProjectileIgnoreEnemy
 
     @gameloop
     def gameLoop(self):

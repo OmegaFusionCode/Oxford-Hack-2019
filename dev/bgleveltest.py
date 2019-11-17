@@ -42,7 +42,7 @@ class GameWindow(object):
 
     def _setupPygame(self, screenX, screenY, gameName):
         pygame.init()
-        pygame.display.set_mode((screenX, screenY))
+        pygame.display.set_mode((screenX, screenY),pygame.FULLSCREEN)
         pygame.display.set_caption(gameName)
         self.screen = pygame.display.get_surface()
         self.screenX = screenX
@@ -93,11 +93,10 @@ class GameWindow(object):
         self.projectileCollisionHandler.post_solve = projectile_post_solve
 
     def _backgroundSetup(self):
-        self.bgs = [BackgroundLayer(self.screen, "bg.png", 0),
-                    BackgroundLayer(self.screen, "bg_mountains.png", 0.25),
-                    BackgroundLayer(self.screen, "bg_clouds.png", 0.5),
-                    BackgroundLayer(self.screen, "bg_hills.png", 0.75),
-                    BackgroundLayer(self.screen, "bg_foreground.png", 1.5)]
+        self.bgs = [BackgroundLayer(self.screen, "bg.png", 0, 0),
+                    BackgroundLayer(self.screen, "bg_mountains.png", 0.25, 0),
+                    BackgroundLayer(self.screen, "bg_hills.png", 0.75, 0),
+                    BackgroundLayer(self.screen, "bg_foreground.png", 1.5, 0)]
 
 
     @gameloop
