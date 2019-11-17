@@ -61,7 +61,7 @@ class Character(Entity):
         self.minVel = -1000
         dir_path = os.path.dirname(os.path.realpath(__file__))
         self.gunSound = pygame.mixer.Sound(os.path.join(dir_path, "sounds/sound_effects/Gun9.wav"))
-        self.gunSound.set_volume(0.15)
+        self.gunSound.set_volume(0.10)
         self.health = 500.0
 
         dir_path = os.path.dirname(os.path.realpath(__file__))

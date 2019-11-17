@@ -23,13 +23,13 @@ class LevelMaker(object):
     def level1(self, initialX, player):
         floor = Floor(self.screen, self.space, self.entities, initialX, 900)
 
-        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, metal())
-        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+490, 120), 200, 20, metal())
+        blockBottom1 = Block(self.screen, self.space, self.entities, (initialX+310, 120), 200, 20, stone())
+        blockBottom2 = Block(self.screen, self.space, self.entities, (initialX+490, 120), 200, 20, stone())
 
         blockMiddle1 = Block(self.screen, self.space, self.entities, (initialX+400, 230), 200, 20, metal(),math.pi/2)
 
-        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+310, 340), 200, 20, metal())
-        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+490, 340), 200, 20, metal())
+        blockUpper1 = Block(self.screen, self.space, self.entities, (initialX+310, 340), 200, 20, glass())
+        blockUpper2 = Block(self.screen, self.space, self.entities, (initialX+490, 340), 200, 20, glass())
 
         blockTop1 = Block(self.screen, self.space, self.entities, (initialX+400, 450), 200, 20, metal(), math.pi/2)
 
