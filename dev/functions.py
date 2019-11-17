@@ -1,4 +1,7 @@
+import math
+
 import pygame
+
 
 def rotate(surf, image, pos, originPos, angle):
     # calcaulate the axis aligned bounding box of the rotated image
@@ -26,3 +29,6 @@ def convert(pos):
     x, y = pos
     screenY = pygame.display.get_surface().get_size()[1]
     return (x, screenY - y)
+
+def magnitude(vect):
+    return math.sqrt(vect[0]**2 + vect[1]**2)
