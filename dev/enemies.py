@@ -16,6 +16,7 @@ class Enemy(Entity):
         super().__init__(screen, space, entities)
         self.body = pymunk.Body(mass, moment)
         self.body.position = pos
+        self.body.entity_ref = self
         self.x = pos[0]
         self.shape = shape
         self.shape.collision_type = 4
@@ -26,7 +27,7 @@ class Enemy(Entity):
         self.alive = True
     def takeDamage(self, damage):
         self.health = self.health - damage
-        if(self.health) <= 0:
+        if self.health <= 0:
             self.die()
     def die(self):
         self.alive = False
