@@ -115,6 +115,17 @@ class GameWindow(object):
                     self.space.remove(shape.body, shape)
             return False
 
+        def enemyDamageCharacter(arbiter, space, data):
+            for shape in arbiter.shapes:
+                if shape.collision_type == 5:
+                    print("You touched an enemy and died!")
+            return False
+
+        def blockDamageCharacter(arbiter, space, data):
+            for shape in arbiter.shapes:
+                if shape.collision_type == 5:
+                    print("You touched a block and died!")
+            return False
 
         self.enemyProjectileIgnoreBlocks_handler = self.space.add_collision_handler(2,3)
         self.enemyProjectileIgnoreBlocks_handler.begin = enemyProjectileIgnoreBlocks
@@ -140,8 +151,11 @@ class GameWindow(object):
         self.enemyProjectileDamageCharacter_handler = self.space.add_collision_handler(2,5)
         self.enemyProjectileDamageCharacter_handler.pre_solve = enemyProjectileDamageCharacter
 
-        #self.enemyDamageCharacter
-        #self.blockDamageCharacter
+        self.enemyDamageCharacter_handler = self.space.add_collision_handler(4,5)
+        self.enemyDamageCharacter_handler.pre_solve = enemyDamageCharacter
+
+        self.blockDamageCharacter_handler = self.space.add_collision_handler(3,5)
+        self.blockDamageCharacter_handler.pre_solve = blockDamageCharacter
 
     @gameloop
     def gameLoop(self):
