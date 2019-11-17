@@ -39,7 +39,7 @@ class Block(Entity):
         dir_path = os.path.dirname(os.path.realpath(__file__))
         ext_path = os.path.join(dir_path, "sounds/sound_effects")
         hitSound = pygame.mixer.Sound(os.path.join(ext_path, soundString))
-        hitSound.set_volume(0.1)
+        hitSound.set_volume(0.15)
         pygame.mixer.Channel(1).play(hitSound)
 
         if self.health <= 0:
