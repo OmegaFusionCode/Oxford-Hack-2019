@@ -105,9 +105,6 @@ class GameWindow(object):
         def damageBlockEnemy(arbiter, space, data):
             impulse = functions.magnitude(arbiter.total_impulse)
             damage = impulse / 10000
-            dir_path = os.path.dirname(os.path.realpath(__file__))
-            hitSound = pygame.mixer.Sound(os.path.join(dir_path, "sounds/sound_effects/turret_hit.wav"))
-            pygame.mixer.Channel(0).play(hitSound)
             for shape in arbiter.shapes:
                 if shape.collision_type in (3, 4):
                     shape.body.entity_ref.takeDamage(damage)

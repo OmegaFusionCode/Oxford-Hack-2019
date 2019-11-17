@@ -29,7 +29,8 @@ class Enemy(Entity):
         self.health = self.health - damage
         dir_path = os.path.dirname(os.path.realpath(__file__))
         hitSound = pygame.mixer.Sound(os.path.join(dir_path, "sounds/sound_effects/turret_hit.wav"))
-        pygame.mixer.Channel(0).play(hitSound)
+        hitSound.set_volume(0.1)
+        pygame.mixer.Channel(3).play(hitSound)
         if self.health <= 0:
             self.die()
     def die(self):
@@ -86,7 +87,7 @@ class Enemy1(Enemy):
                 dir_path = os.path.dirname(os.path.realpath(__file__))
                 gunSound = pygame.mixer.Sound(os.path.join(dir_path, "sounds/sound_effects/Gun8.wav"))
                 gunSound.set_volume(0.1)
-                pygame.mixer.Channel(0).play(gunSound)
+                pygame.mixer.Channel(2).play(gunSound)
             self.barrel.cooldown -= dt
         else:
             self.remove()
@@ -134,7 +135,7 @@ class Enemy2(Enemy):
                 dir_path = os.path.dirname(os.path.realpath(__file__))
                 gunSound = pygame.mixer.Sound(os.path.join(dir_path, "sounds/sound_effects/Gun8.wav"))
                 gunSound.set_volume(0.1)
-                pygame.mixer.Channel(0).play(gunSound)
+                pygame.mixer.Channel(2).play(gunSound)
             self.barrel.cooldown -= dt
         else:
             self.remove()
