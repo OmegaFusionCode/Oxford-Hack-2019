@@ -115,7 +115,7 @@ class Enemy2(Enemy):
 
             if self.barrel.cooldown <= 0:
                 self.barrel.createProjectile(1)
-                self.barrel.cooldown = 
+                self.barrel.cooldown = 2.5
             self.barrel.cooldown -= dt
         else:
             self.remove()
