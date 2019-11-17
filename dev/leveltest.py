@@ -104,6 +104,15 @@ class GameWindow(object):
         def enemyProjectileIgnoreEnemy(arbiter, space, data):
             return False
 
+        def projectileDamageBlockEnemy(arbiter, space, data):
+            impulse = functions.magnitude(arbiter.total_impulse)
+            damage = impulse / 10000
+            for shape in arbiter.shapes:
+                if shape.collision_type in (3, 4):
+                    if damage >= 15:
+                        shape.body.entity_ref.takeDamage(damage)
+            projectileDestroyOnImpact(arbiter, space, data)
+
         def damageBlockEnemy(arbiter, space, data):
             impulse = functions.magnitude(arbiter.total_impulse)
             damage = impulse / 10000
@@ -174,10 +183,10 @@ class GameWindow(object):
         self.enemyProjectileIgnoreEnemy_hander.begin = enemyProjectileIgnoreEnemy
 
         self.projectileDamageBlock_handler = self.space.add_collision_handler(1,3)
-        self.projectileDamageBlock_handler.post_solve = damageBlockEnemy
+        self.projectileDamageBlock_handler.post_solve = projectileDamageBlockEnemy
 
         self.projectileDamageEnemy_handler = self.space.add_collision_handler(1,4)
-        self.projectileDamageEnemy_handler.post_solve = damageBlockEnemy
+        self.projectileDamageEnemy_handler.post_solve = projectileDamageBlockEnemy
 
         self.enemyDamageBlock_handler = self.space.add_collision_handler(3,4)
         self.enemyDamageBlock_handler.post_solve = damageBlockEnemy
